@@ -9,7 +9,7 @@ that environments do not provide direct access to the state (i.e., the RAM of At
 A reinforcement learning agent interacts with the MDP by issuing actions according to a policy. Formally, policy $\pi$ is a mapping from states to probability distributions over $\mathcal{A}$. The quality of a policy is measured by the value function $\mathbb{E}_{\pi}\left(\sum_{t=0}^{+\infty}\gamma^t r_{t+1}|s_0=s \right)$, which for a starting state $s$ estimates the total discounted reward gathered by the agent. In Atari 2600 games our goal is to find a policy which maximizes the value function from the beginning of the game.
 Crucially, apart from an Atari 2600 emulator environment $env$ we will use \textit{a neural network simulated environment} $env'$ which we call a \textit{world model} and describe in detail in Section \ref{sec:world_models}. The environment $env'$ shares the action space and reward space with $env$ and produces visual observations in the same format, as it will be trained to mimic $env$.  Our principal aim is to
 train a policy $\pi$ using a simulated environment $env'$ so that $\pi$ achieves good performance in the original environment $env$. In this training process we aim to use as few interactions with $env$ as possible. 
-The initial data to train $env'$ comes from random rollouts of $env$. As this is unlikely to capture all aspects of $env$, we use the data-aggregation iterative method presented in Algorithm~\ref{alg:basic_loop}.
+The initial data to train $env'$ comes from random rollouts of $env$. As this is unlikely to capture all aspects of $env$, we use the iterative data-aggregation  method presented in Algorithm~\ref{alg:basic_loop}.
 
 \begin{figure}  % \small
 \removelatexerror
@@ -17,23 +17,19 @@ The initial data to train $env'$ comes from random rollouts of $env$. As this is
 \caption{Pseudocode for SimPLe}\label{dpll}
 \begin{algorithmic}
 \STATE Initialize policy $\boldsymbol\pi$
-\STATE Initialize model parameters $env'$
+\STATE Initialize model environment $env'$
 \STATE Initialize empty set $\mathbf{D}$
-\WHILE{not done} 
+\WHILE{not done}
 \STATE \underline{$\triangleright$ collect observations from real env.}
-\WHILE{not enough observations}
-\STATE $a \gets \boldsymbol\pi(s)$
-\STATE $(s' ,r) \gets env(a)$
-\STATE $\mathbf{D} \gets \mathbf{D} \cup (s,a,r,s')$
-\STATE $s \leftarrow s'$
-\ENDWHILE
+\STATE $\mathbf{D} \gets \mathbf{D} \cup \text{COLLECT($env$, $\pi$)}$
 \STATE \underline{$\triangleright$ update model using collected data.}
-\STATE $\boldsymbol\theta \gets \text{TRAIN\_SUPERVISED}(env', \mathbf{D})$
+\STATE $\boldsymbol{env'} \gets \text{TRAIN\_SUPERVISED}(env', \mathbf{D})$
 \STATE \underline{$\triangleright$ update policy using world model.}
-\STATE $\boldsymbol\pi \gets \text{TRAIN\_RL}(\boldsymbol\pi, \boldsymbol\theta)$
+\STATE $\boldsymbol\pi \gets \text{TRAIN\_RL}(\boldsymbol\pi, env')$
 \ENDWHILE
 \end{algorithmic}
 \label{basic_loop}
 \label{alg:basic_loop}
 \end{algorithm}
+\vspace{-0.8cm}
 \end{figure}
