@@ -1,0 +1,50 @@
+This is BibTeX, Version 0.99d (TeX Live 2019)
+Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+The top-level auxiliary file: main.aux
+The style file: icml2019.bst
+Database file #1: model_based.bib
+A bad cross reference---entry "venkatraman"
+refers to entry "DBLP:conf/iser/2016", which doesn't exist
+Warning--I didn't find a database entry for "DBLP:conf/iser/2016"
+You've used 47 entries,
+            2773 wiz_defined-function locations,
+            834 strings with 14760 characters,
+and the built_in function-call counts, 27778 in all, are:
+= -- 2310
+> -- 2313
+< -- 21
++ -- 771
+- -- 724
+* -- 2437
+:= -- 4371
+add.period$ -- 148
+call.type$ -- 47
+change.case$ -- 378
+chr.to.int$ -- 47
+cite$ -- 94
+duplicate$ -- 1102
+empty$ -- 1796
+format.name$ -- 785
+if$ -- 5726
+int.to.chr$ -- 1
+int.to.str$ -- 1
+missing$ -- 48
+newline$ -- 247
+num.names$ -- 192
+pop$ -- 725
+preamble$ -- 1
+purify$ -- 332
+quote$ -- 0
+skip$ -- 1003
+stack$ -- 0
+substring$ -- 647
+swap$ -- 177
+text.length$ -- 12
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 512
+warning$ -- 0
+while$ -- 186
+width$ -- 0
+write$ -- 624
+(There was 1 error message)

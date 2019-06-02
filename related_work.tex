@@ -1,0 +1,38 @@
+\section{Related Work}
+\label{sec:related_work}
+
+% HM.1.9. a previous versiof of related work section is in the file related_work_old_v2.tex.
+
+Atari games gained prominence as a popular benchmark for reinforcement learning algorithms with the introduction of the Arcade Learning Environment (ALE)~\cite{ale}. The combination of reinforcement learning and deep models then enabled RL algorithms to learn to play Atari games directly from images of the game screen, using variants of the DQN algorithm~\cite{dqn, dqn2, rainbow} and actor-critic algorithms~\cite{a3c,ppo,ga3c,acktr,vtrace}. The most successful methods in this domain remain model-free algorithms~\cite{rainbow,vtrace}. Although the sample complexity of these methods has substantially improved in recent years, it remains far higher than the amount of experience required for human players to learn each game~\cite{human_atari_minutes}. In this work, we aim to learn Atari games with a budget of just 100K agent steps (400K frames), corresponding to about two hours of play time. Prior methods are generally not evaluated in this regime, and we therefore re-optimized Rainbow~\cite{rainbow} for optimal performance on 1M steps.
+
+
+
+%%SL.1.15: Maybe we transition by saying: While to our knowledge no prior work has successfully learned to play a variety of Atari games with model-based reinforcement learning methods directly, multiple prior works have studied the problem of modeling Atari games, both as static videos and with action-conditioned models...
+%%HM.1.19. I am worried about "no prior work has successfully learned", mostly because of VPN, which we cite below3
+\citet{video_prediction} and \citet{recurrent} show that learning predictive models of Atari 2600 environments is possible using appropriately chosen deep learning architectures. Impressively, in some cases the predictions maintain low $L_2$ error over timespans of hundreds of steps. 
+As learned simulators of Atari environments are core ingredients of our approach, in many aspects our work is motivated by \citet{video_prediction} and \citet{recurrent}, however we focus on using video prediction in the context of learning how to play the game well and positively verify that learned simulators can be used to train a policy useful in original environments.
+An important step in this direction was made by \citet{video_reward_prediction}, which extends the work of \citet{video_prediction} by including reward prediction, but does not use the model to learn policies that play the games.
+Perhaps surprisingly, there is virtually no work on model-based RL in video games from images.
+Notable exceptions are the works of
+\citet{vpn}, \citet{world_models}, \citet{dyna_dqn} and \cite{gats}. \citet{vpn} use a model of rewards to augment model-free learning with good results on a number of Atari games. However, this method does not actually aim to model or predict future frames, and achieves clear but relatively modest gains in efficiency.
+\citet{world_models} present a way to compose a variational autoencoder with a recurrent neural network into an architecture  
+that is successfully evaluated in the VizDoom environment and on a 2D racing game. 
+The training procedure is similar to  Algorithm \ref{alg:basic_loop}, but only one iteration of the loop is needed as the environments are simple enough to be fully explored with random exploration. \citet{dyna_dqn} use a variant of Dyna~\cite{dyna} to learn a model of the environment and generate experience for policy training in the context of Atari games. Using six Atari games as a benchmark \citet{dyna_dqn} measure the impact of planning shapes on performance of the Dyna-DQN algorithm and include ablations comparing scores obtained with perfect and imperfect models. Our method achieves around 330\% of the Dyna-DQN score on Asterix, 120\% on Q-Bert, 150\% on Seaquest and 80\% on Ms. Pac-Man. \cite{gats} propose an algorithm called Generative Adversarial Tree Search (GATS) and for five Atari games train a GAN-based world model along with a Q-function. \cite{gats} primarily discuss various failure modes of the GATS algorithm. Our method achieves around 64 times the score of GATS on Pong and 10 times on Breakout. \footnote{Comparison with Dyna-DQN and GATS is based on  random-normalized scores achieved at 100K interactions. Those are approximate, as the authors Dyna-DQN and GATS have not provided tabular results. Authors of Dyna-DQN also report scores on two games which we do not consider: Beam Rider and Space Invaders. For both games the reported scores are close to  random scores. Authors of GATS report scores on Asterix, but those are also close to a random score.}
+
+
+% improve upon those results and extend them to a wider range of environments.
+%%SL.1.15: I don't suppose there is anything we can include in our experiments that we can honestly say is a *comparison* to this method?
+%%HM.1.19: Single loop of learning is quite close to what happens in the World Models paper (in our previous experiments single loop was never sufficient). However, this is not a direct comparison in the sense that we are playing different games.
+
+
+Outside of games, model-based reinforcement learning has been investigated at length for applications such as robotics~\cite{deisenroth}. Though most of such works do not use image observations, several recent works
+have incorporated images into real-world~\cite{deep_spatial, finn2016, sv2p, ebert, piergiovanni, paxton, rybkin-pertsch,ebert2018visual} and simulated~\cite{embed_to_control, hafner} robotic control. 
+%% HM.1.19: Please have a look if division into "real-world" and "simulated" is correct. Some of the "real-world" does not work directly with a robot, but with a robotic dataset.
+Our video models of Atari environments described in Section \ref{sec:architectures} are motivated by models developed in the context of robotics. Another source of inspiration are discrete autoencoders proposed by \citet{neural_discrete} and \citet{auto_discrete}.
+% \todo[inline]{SL.1.15: For this last sentence, I feel like we should instead have a separate place where we discuss related work on modeling (i.e., related prediction models)}
+
+The structure of the model-based RL algorithm that we employ consists of alternating between learning a model, and then using this model to optimize a policy by using model-free reinforcement learning within the model. Variants of this basic algorithm have been proposed in a number of prior works, starting from Dyna~\cite{dyna} to more recent methods that incorporate deep networks for models and policies
+\cite{stochastic_value_gradients, model_based_value_estimation, uncertainty_driven_imagination, trpo_ensemble}. 
+
+
+%% HM.1.19. Another model https://openreview.net/forum?id=S1x4ghC9tQ  for video prediction tested on DeepMind Lab. Looks quite cool, it made appearance in the Oxford RL reading group. Let me know whether it deserves a broader discussion. They are not doing Atari, but there is not problem to do try Atari with their setup (DeepMind Lab seems to be more demanding than a typical Atari game).

@@ -1,0 +1,49 @@
+%!TEX root = nips_2018.tex
+
+
+%% HM 01.10 - "predictive models" --> "video models"
+
+\section{Introduction}
+
+Human players can learn to play Atari games in minutes~\cite{human_atari_minutes}. However, our best model-free reinforcement learning algorithms require tens or hundreds of millions of time steps -- the equivalent of several weeks of training in real time. How is it that humans can learn these games so much faster? Perhaps part of the puzzle is that humans possess an intuitive understanding of the physical processes that are represented in the game: we know that planes can fly, balls can roll, and bullets can destroy aliens. We can therefore predict the outcomes of our actions. In this paper, we explore how learned video models can enable learning in the Atari Learning Environment (ALE) benchmark~\cite{ale, ale2} with a budget restricted to 100K time steps -- roughly to one hour of play time.
+%%SL.1.15: maybe change human-game play to "play time" (to avoid making it seem like we use demos)
+Using models of environments, or informally giving the agent ability to predict its future, has a fundamental appeal for reinforcement learning. The spectrum of possible applications is vast, including learning policies
+from the model Chapter 8 in \cite{sutton_barto_2017}, % used to be [Chapter 8], but was breaking in ICML style
+\cite{embed_to_control, deep_spatial, finn2016, ebert, hafner, piergiovanni, rybkin-pertsch}, capturing important details of the scene \cite{world_models}, encouraging exploration \cite{video_prediction} or creating intrinsic motivation \cite{pathak}.
+%% HM 01.10 other nice candidates, but pathak is not a great citation and do not have good citations 
+%%SL.1.15: for intrinsic motivation, you can cite Schmidhuber intrinsic curiosity paper. This will also decrease likelihood of rejection if Prof. Schmidhuber is your reviewer :)  http://people.idsia.ch/~juergen/interest.html
+% - counterfactual reasoning, 
+% - hierarchical control 
+%%SL.1.15: For counterfactual reasoning, we can cite Nick Heess recent "would shoulda coulda" paper and check its related work section for more classical citations. For hierarchical control, I'm not sure...
+One of the most exciting benefits of model-based learning is the promise to substantially improve sample efficiency of deep reinforcement learning, see Chapter 8 in \cite{sutton_barto_2017}.
+
+%%SL.12.27: I would consider putting this paragraph further down
+%%SL.1.15: Perhaps one way this could be rephrased is like this (trying to keep the spirit of the original but improve flow): Our work advances the state of the art in model-based reinforcement learning by introducing a system that, to our knowledge, is the first to successfully handle a variety of challenging games in the ALE benchmark. To that end, we describe several stochastic video prediction techniques, including a novel model based on discrete latent variables, and an approach that utilizes that can train a policy to play the game within the learned model. With several iterations of iterative dataset aggregation, where the policy is deployed to collect more data in the original game, we can recover a policy that, for many games, can successful play the game in the real environment (see ...
+%%SL.1.15: (the metric thing feels like it might be better to introduce later, unless it is really critical?)
+This work advances the state-of-the-art of model-based reinforcement learning by presenting the first system that can handle the challenging domain of Atari 2600 environments. We introduce new models of the environment, propose a new measure of model accuracy and modify RL training to accommodate model inaccuracies. Finally, we use such trained world models as a simulated environment on which a reinforcement learning algorithm learns a policy. We experimentally verify that the learnt policy is indeed useful in the original environments (see \href{https://sites.google.com/view/modelbasedrlatari/home}{dedicated webpage\footnote{\url{https://sites.google.com/view/modelbasedrlatari/home}} with visualizations} of experiments presented in Section \ref{sec:experiments}). 
+% To our knowledge, this is the first work to implement end-to-end model-based reinforcement learning in the visually rich, high-dimensional setting of Atari 2600 environments.
+%%SL.12.27: are we completely certain that last sentence is true? didn't Oh et al do something like this? sure, we might argue they didn't do so as successfully, but it would be really unfortunate to have some reviewer raise this issue during the review process...
+%% HM.01.10: good catch, I have _added_ vpn to related work
+%%SL.1.15: I actually meant Oh et al video prediction paper: https://arxiv.org/abs/1507.08750
+
+% Recently, the main progress in reinforcement learning has stemmed from development of model-free methods e.g.  \cite{rainbow, ppo, acktr}.
+%%SL.12.27: Well, this is maybe a bit too sweeping of a generalization. Certainly true for Atari games, but not for all of RL.
+% These methods yield impressive results but usually suffer from poor sample efficiency.
+%%HM.01.10: I am removing this paragraph for now. Even if we limit scope to video games, then VPN, imagination may feel offended.
+
+%%SL.1.15: I would suggest putting this paragraph in as paragraph 2 (above "This work advances") -- that way it serves as a kind of motivation and puts the main contribution in context
+Although prior works have proposed training predictive models for next-frame, future-frame, as well as combined future-frame and reward predictions~\cite{video_prediction,recurrent, video_reward_prediction} in Atari games, no prior work has successfully demonstrated model-based control via such predictive models that achieves results that are competitive with model-free RL. Indeed, in a recent survey by Machado et al. this was formulated as the following challenge: ``So far, there has been no clear demonstration of successful planning with a learned model in the ALE'' (Section 7.2 in \cite{ale2}).
+
+\todo[inline]{SL.12.27:  I might recommend explicitly stating the empirical results at the end of the intro to communicate to the reader some of the excitement.}
+
+% To formalize the latter, we propose a new metric which measures the \textit{correctness of rewards predictions per sequence}. The metric is the ratio of test trajectories with rewards predictions consistent with the real environment (see Section \ref{sec:architectures}). We believe that this metric is a better measure of the quality of the model than next-frame errors.
+
+% \todo[inline]{This is not a new metric, very similar one was proposed in: https://arxiv.org/pdf/1611.07078.pdf}
+%%HM.01.10. Good catch, added to the bibliography.
+
+
+\emph{Overview:}
+Section \ref{sec:related_work} contains an overview of related work. Section \ref{subsec:model} contains a brief introduction to model-based reinforcement learning. Section \ref{sec:training} describes neural architectures and training methods used for training of simulators. Section \ref{sec:envs} describes Atari environments which we use in our experiments.  Section \ref{sec:experiments} summarizes our experiments. % which described experiments. 
+
+
+

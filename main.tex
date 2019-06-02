@@ -1,0 +1,119 @@
+\documentclass{article} % For LaTeX2e
+
+% Recommended, but optional, packages for figures and better typesetting:
+% \usepackage{microtype}
+% \usepackage{graphicx}
+% \usepackage{subfigure}
+% \usepackage{booktabs} % for professional tables
+
+% hyperref makes hyperlinks in the resulting PDF.
+% If your build breaks (sometimes temporarily if a hyperlink spans a page)
+% please comment out the following usepackage line and replace
+% \usepackage{icml2019} with \usepackage[nohyperref]{icml2019} above.
+%\usepackage{hyperref}
+
+% Attempt to make hyperref and algorithmic work together better:
+% \newcommand{\theHalgorithm}{\arabic{algorithm}}
+
+% Use the following line for the initial blind version submitted for review:
+% \usepackage{icml2019}
+
+% If accepted, instead use the following line for the camera-ready submission:
+\usepackage[accepted]{icml2019}
+
+\usepackage{times}
+
+% The \icmltitle you define below is probably too long as a header.
+% Therefore, a sort form for the running title is supplied here:
+\icmltitlerunning{Model-Based Reinforcement Learning for Atari}
+
+%\usepackage{times}
+
+% Optional math commands from https://github.com/goodfeli/dlbook_notation.
+\input{math_commands.tex}
+
+%\usepackage{hyperref}
+\usepackage{url}
+
+\input{macros}
+\usepackage{comment}
+
+\usepackage{pdflscape}
+
+\begin{document}
+
+\twocolumn[
+% \icmltitle{Model-Based Reinforcement Learning for Atari}
+\icmltitle{Model Based Reinforcement Learning for Atari}
+
+\icmlsetsymbol{equal}{*}
+
+\begin{icmlauthorlist}
+\icmlauthor{\L{}ukasz Kaiser}{equal,brain}
+\icmlauthor{Mohammad Babaeizadeh}{equal,ui,intern}
+\icmlauthor{Piotr Mi\l{}oś}{equal,uw,ds}
+\icmlauthor{Błażej Osiński}{equal,uw,ds,intern}\\
+\icmlauthor{Roy H Campbell}{ui}
+\icmlauthor{Konrad Czechowski}{uw}
+\icmlauthor{Dumitru Erhan}{brain}
+\icmlauthor{Chelsea Finn}{brain}
+\icmlauthor{Piotr Kozakowski}{uw}
+\icmlauthor{Sergey Levine}{brain}
+\icmlauthor{Afroz Mohiuddin}{brain}
+\icmlauthor{Ryan Sepassi}{brain}
+\icmlauthor{George Tucker}{brain}
+\icmlauthor{Henryk Michalewski}{uw,ds}
+\end{icmlauthorlist}
+
+\icmlaffiliation{brain}{Google Brain, Mountain View, CA, USA}
+\icmlaffiliation{intern}{Work partially performed while an intern at Google Brain}
+\icmlaffiliation{uw}{Faculty of Mathematics, Informatics and Mechanics, University of Warsaw, Warsaw, Poland}
+\icmlaffiliation{ui}{University of Illinois at Urbana–Champaign, Urbana-Champaign, IL, USA}
+\icmlaffiliation{ds}{deepsense.ai, Warsaw, Poland}
+
+\icmlcorrespondingauthor{Błażej Osiński}{b.osinski@mimuw.edu.pl}
+% someone else wants to be corresponding author as well?
+
+% You may provide any keywords that you
+% find helpful for describing your paper; these are used to populate
+% the "keywords" metadata in the PDF but will not be shown in the document
+\icmlkeywords{Machine Learning, ICML}
+
+\vskip 0.3in
+]
+
+\printAffiliationsAndNotice{\icmlEqualContribution}
+%TODO(PM): After all we may want to remove 20K-100K as we only report 20K
+\begin{abstract}
+Model-free reinforcement learning (RL) can be used to learn effective policies for complex tasks,
+such as Atari games, even from image observations. However, this typically requires very large amounts of
+interaction -- substantially more, in fact, than a human would need to learn the same games.
+How can people learn so quickly? Part of the answer may be that people can learn how the game works and predict which actions will lead to desirable outcomes. In this paper, we explore how video prediction models can similarly enable agents to solve Atari games with fewer interactions than model-free methods. We describe Simulated Policy Learning (SimPLe), a complete model-based deep RL algorithm based on video prediction models and present a comparison of several model architectures, including a novel architecture that yields the best results in our setting. Our experiments evaluate SimPLe on a range of Atari games in low data regime of 20K-100K interactions between the agent and the environment, which corresponds to half an hour to two hours of real-time play. In most games SimPLe outperforms state-of-the-art model-free algorithms, in some games by over an order of magnitude.
+\end{abstract}
+
+\input{pm_introduction}
+
+\input{related_work}
+
+\input{learning_alogrithm.tex}
+
+\input{architectures}
+
+\input{policies}
+
+\input{experiments}
+
+\input{analysis}
+
+\input{conclusion}
+
+\subsection*{Acknowledgments} We thank Marc Bellemare and Pablo Castro for their help with Rainbow and Dopamine. The work of Konrad Czechowski, Piotr Kozakowski and Piotr Miłoś was supported by the Polish National Science Center grants UMO-2017/26/E/ST6/00622. The work of Henryk Michalewski was supported by the Polish National Science Center grant UMO-2018/29/B/ST6/02959. This research was supported by the PL-Grid Infrastructure. In particular, Konrad Czechowski, Piotr Kozakowski, Henryk Michalewski, Piotr Miłoś and Błażej Osiński extensively used the Prometheus supercomputer, located in the Academic Computer Center
+Cyfronet in the AGH University of Science and Technology in Kraków, Poland. 
+
+\bibliography{model_based}
+\bibliographystyle{icml2019}
+
+
+\input{appendix_experiments}
+
+\end{document}

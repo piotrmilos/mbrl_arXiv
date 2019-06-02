@@ -1,0 +1,117 @@
+%!TEX root = nips_2018.tex
+
+
+\section{Introduction}
+
+%%SL.12.27: Perhaps it would be good to make sure to state the problem/challenge somewhere in the first or second paragraph
+
+%%SL.12.27: Here is a somewhat fluffy but perhaps appealing way to open the introduction: Human players can learn to play Atari games in minutes~\cite{something}. However, our best model-free reinforcement learning algorithms require tens or hundreds of millions of time steps -- the equivalent of several weeks [??] of training in real time. How is it that people can learn these games so much faster? Perhaps part of the puzzle is that people possess an intuitive understanding of the physical processes that are represented in the game: we know that planes can fly, balls can roll, and bullets can destroy objects. We can therefore predict the outcomes of our actions. In this paper, we explore how learned predictive models can enable much faster learning in the Atari Learning Environment (ALE) benchmark~\cite{something}. Using models of environments, ... [continue as before]
+Using models of environments, or informally giving the agent ability to predict its future, has a fundamental appeal for reinforcement learning. The spectrum of possible applications is vast, including learning
+%%SL.12.27: you mean learning policies from the model?
+from the model \cite[Chapter 8]{sutton_barto_2017, pixel1, pixel2, pixel3, raw_visual}, capturing important details of the scene \cite{world_models}, encouraging exploration \cite{video_prediction} and creating intrinsic motivation \cite{pathak}. %, counterfactual reasoning, hierarchical control 
+%%SL.12.27: that last one doesn't really learn a predictive model in the same sense -- maybe there is another citation that would be better that actually performs pixel prediction?
+One of the most exciting benefits of model-based learning is the promise to substantially improve sample efficiency of deep reinforcement learning %\cite{trpo_ensemble, mpc_model_based}.  
+\cite[Chapter 8]{sutton_barto_2017}.
+
+%%SL.12.27: I would consider putting this paragraph further down
+This work advances the state-of-the-art of model-based reinforcement learning by presenting the first system that can handle the challenging domain of Atari 2600 environments. We introduce new models of the environment, propose a new measure of model accuracy and modify RL training to accommodate model inaccuracies. Finally, we use such trained world models as a simulated environment on which a reinforcement learning algorithm learns a policy. We experimentally verify that the learnt policy is indeed useful in the original environments. To our knowledge, this is the first work to implement end-to-end model-based reinforcement learning in the visually rich, high-dimensional setting of Atari 2600 environments.
+%%SL.12.27: are we completely certain that last sentence is true? didn't Oh et al do something like this? sure, we might argue they didn't do so as successfully, but it would be really unfortunate to have some reviewer raise this issue during the review process...
+
+Recently, the main progress in reinforcement learning has stemmed from development of model-free methods e.g. \cite{rainbow, ppo, acktr}.
+%%SL.12.27: Well, this is maybe a bit too sweeping of a generalization. Certainly true for Atari games, but not for all of RL.
+These methods yield impressive results but usually suffer from poor sample efficiency.
+% \todo{[TODO: write more]}
+%
+% The focus of \cite{video_prediction,recurrent} is to develop neural network models for some Atari 2600 environments. These models are shown to behave well along trajectories produced by a perturbed expert policy. We stress that our aim is different. The ultimate goal is learning from models. The desiderata for such models is that they are general enough to support exploration, at least in some trust region, and that they correctly predict rewards. To formalize the latter, we propose a new \textit{correct rewards per sequence} metric which is the ratio of eval trajectories with the rewards predictions consistent with the real environment (see definition \textbf{to do}). We think that that this metric is a better measure of the quality of the model than the $L_2$ error. \todo{(Henryk) A bit controversial, because for Breakout and Freeway it does not work even for short trajectories?}
+%
+A step towards model-based learning is to train neural network models that, for a given action and and a visual input, correctly predict the next frame.  In the case of Atari 2600 games this kind of visually realistic models were trained in \cite{video_prediction,recurrent}. Since these models do not predict rewards,  they have not been used for learning of policies\footnote{In a recent survey \cite{ale2} this was formulated as the following challenge: ``So far, there has been no clear demonstration of successful planning with a learned model in the ALE'' (\cite[Section 7.2]{ale2}).}.
+%%SL.12.27: I think we can do better in this paragraph. The previous models didn't do well at actually playing the game not just because they didn't predict the reward -- it was not for lack of trying. But formulating the challenge in a way that is clear to the reader and also correct is probably going to be a bit hard. Maybe I might suggest something like this: Although multiple prior works have proposed training predictive models for next-frame and future-frame prediction in Atari games~\cite{something}, no prior work has successfully demonstrated model-based control via such predictive models that achieves results that are competitive with model-free RL. Indeed, in a recent survey by \citet{ale2}, this was formulated as the following challenge: ``So far, there has been no clear demonstration of successful planning with a learned model in the ALE.''
+%%SL.12.27: this in some sense less crisp (not obvious why this has not been successful), but that is closer to the truth: in the end, we probably don't quite know why the prior model-based efforts didn't work
+%The focus of \cite{video_prediction,recurrent} is to develop neural network models to simulate some Atari 2600 environments. 
+These models are shown to behave well along trajectories produced by a perturbed expert policy.
+
+Our aim is different: we use neural network simulations to learn policies that are useful in the original environments. The desiderata for such simulations is that they are general enough to support exploration, at least over a timespan, and that they correctly predict rewards (see \href{https://sites.google.com/view/modelbasedrlatari/home}{dedicated webpage\footnote{\url{https://sites.google.com/view/modelbasedrlatari/home}} with visualizations} of experiments presented in Section \ref{sec:experiments}).  To formalize the latter, we propose a new metric which measures the \textit{correctness of rewards predictions per sequence}. The metric is the ratio of test trajectories with rewards predictions consistent with the real environment (see Section \ref{sec:architectures}). We believe that this metric is a better measure of the quality of the model than next-frame errors.% \todo{(Henryk) A bit controversial, because for Breakout and Freeway it does not work even for short trajectories?}
+%https://kdmi.neptune.deepsense.io/#dashboard/job/19c19d1d-6721-402c-9918-d8809854e76e
+\todo[inline]{This is not a new metric, very similar one was proposed in: https://arxiv.org/pdf/1611.07078.pdf}
+
+%%SL.12.27:  I might recommend explicitly stating the empirical results at the end of the intro to communicate to the reader some of the excitement.
+
+\emph{Overview:}
+Section \ref{subsec:model} contains a brief introduction to model-based reinforcement learning. Section \ref{sec:related_work} contains an overview of related work. Section \ref{sec:training} describes neural architectures and training methods used for training of simulators. Section \ref{sec:envs} describes Atari environments which we use in our experiments.  Section \ref{sec:experiments} summarizes our experiments. % which described experiments. 
+
+%%SL.12.27: I think this can go after Sec 2
+\subsection{Model based learning algorithm}
+\label{subsec:model}
+
+Reinforcement learning is formalized by Markov decision processes (MDP). An MDP is defined as a tuple $(\mathcal{S}, \Aa, P, r, \gamma)$, where $\mathcal{S}$ is a state space, $\Aa$ is a set of actions available to an agent, $P$ is the transition kernel, $r$ is reward function and $\gamma\in (0,1)$ is the discount factor. 
+% In many cases the agent is not able to observe the state $s\in \mathcal{S}$ directly but a observation $o$ belonging to some observation space $\mathcal{O}$. These are related by a mapping $f:\mathcal{S}\mapsto \mathcal{O}$.
+In this work we refer to MDPs as environments and assume that environments fulfill the following assumptions:% used in this work (they will be also ). 
+%\begin{itemize}
+%	\item 
+(1) Our environments do not have direct access to the state (the RAM of Atari 2600 emulator), instead we use visual observations, typically $210\times 160$ RGB images. A single image does not determine the state. To circumvent this we stack four last frames. % and use other game specific augmentations described in Section \ref{sec:envs}. % devoted to the particular games).
+  After this augmentations we will assume that the observation can be identified with the state. %   The states and observations will be used interchangeably.
+%	\item 
+(2) Our environments are deterministic, namely the transition kernel $P$ can be identified with a function $env:\mathcal{S}\times \Aa\mapsto \mathcal{S}$, i.e. given a state and action the environment produces the next state. 
+%	\item 
+(3) The action space $\Aa$ and the space of rewards are finite. 
+
+A reinforcement learning agent interacts with the MDP issuing actions according to a policy. Formally, policy $\pi$ is a mapping from states to probability distributions over $\mathcal{A}$. The quality of a policy is measured by the value function $\mathbb{E}_{\pi}\left(\sum_{t=0}^{+\infty}\gamma^t r_{t+1}|s_0=s \right)$, which for a starting state $s$ estimates the total discounted reward gathered by the agent. In Atari 2600 games our goal is to find a policy which maximizes the value function when the starting state is the beginning of the game.
+
+Crucially, apart from a Atari 2600 emulator environment $env$ we will use \textit{a neural network simulated environment} $env'$. The environment $env'$ shares the action and reward spaces with $env$ and produces visual observations in the same format. The  environment $env'$ will be trained to mimic $env$.  The principal aim of our work is to check if one can train a policy $\pi$ using a simulated environment $env'$ so that $\pi$ achieves a desired performance in the original environment $env$. During the training we aim to use as little interactions with $env$ as possible. %, we will denote the number of these real samples by $N$. 
+
+% \input{figures/the_loop.tex}
+
+The initial data to train $env'$ comes from random rollouts of $env$. As this is unlikely to capture all aspects of the environment, thus we use the following data-aggregation iterative algorithm inspired by \cite[Section 4]{trpo_ensemble} and \cite[Section 5]{world_models}.
+
+
+% \begin{algorithm}[H]
+% \caption{Vanilla loop of model-based reinforcement learning}\label{dpll}
+% \begin{algorithmic}[1]
+% \State \texttt{Initialize policy $\pi$}
+% \State \texttt{Initialize simulated environement $env'$}
+% \State \texttt{Initialize empty dataset $D$}	
+% \Repeat 
+% \State \texttt{aggregate observations and rewards }
+% \State \texttt{$\quad$obtained using $\pi$ in $env$ with $D$}
+% \State \texttt{improve $env'$ using $D$ and SL}
+% \State $\texttt{train $\pi$ in $env'$ using an RL algorithm}$
+% %{DPLL}{$\Phi$}
+% %\If {$\Phi \text{ is empty}$} \Return True
+% %\EndIf
+% %\If {$\Phi \text{ contains an empty clause}$} \Return False
+% %\EndIf
+% %\State $l \gets \text{choose-literal}(\Phi)$
+% %\State\Return {DPLL($\Phi \wedge l$) or DPLL($\Phi \wedge \text{not }l$)}
+% \Until{\texttt{performance of $\pi$ in $env$ is satisfactory}}
+% \end{algorithmic}
+% \label{basic_loop}
+% \label{alg:basic_loop}
+% \end{algorithm}
+ 
+
+\begin{algorithm}[H]
+\caption{Vanilla loop of model-based reinforcement learning}\label{dpll}
+\begin{algorithmic}[1]
+\State \texttt{Initialize policy $\pi$ and neural net parameters of $env$}	
+\State \texttt{Initialize empty dataset $D$}	
+\Repeat 
+\State \texttt{add to D some observations and rewards running $\pi$ in $\env$}
+\State \texttt{using supervised training and $D$ improve $\env$ }
+\State $\texttt{train $\pi$ in improved $\env$ using a model-free algorithm}$
+%{DPLL}{$\Phi$}
+%\If {$\Phi \text{ is empty}$} \Return True
+%\EndIf
+%\If {$\Phi \text{ contains an empty clause}$} \Return False
+%\EndIf
+%\State $l \gets \text{choose-literal}(\Phi)$
+%\State\Return {DPLL($\Phi \wedge l$) or DPLL($\Phi \wedge \text{not }l$)}
+\Until{\texttt{performance of $\pi$ in $\env$ is satisfactory}}
+\end{algorithmic}
+\label{basic_loop}
+\label{alg:basic_loop}
+\end{algorithm}
+ 
+%   In our experiments we use the Proximal Policy Optimization (PPO) algorithm \cite{ppo} as a model-free reinforcement learning algorithm (see Section \ref{sec:rl} for more details). % describes our reinforcement learning training.  
+% Other details of implementations will be described in
+
+
