@@ -16,16 +16,16 @@ The initial data to train $env'$ comes from random rollouts of $env$. As this is
 \begin{algorithm}[H]
 \caption{Pseudocode for SimPLe}\label{dpll}
 \begin{algorithmic}
-\STATE Initialize policy $\boldsymbol\pi$
+\STATE Initialize policy $\pi$
 \STATE Initialize model environment $env'$
-\STATE Initialize empty set $\mathbf{D}$
+\STATE Initialize empty set ${D}$
 \WHILE{not done}
 \STATE \underline{$\triangleright$ collect observations from real env.}
-\STATE $\mathbf{D} \gets \mathbf{D} \cup \text{COLLECT($env$, $\pi$)}$
+\STATE $D \gets D \cup \text{COLLECT($env$, $\pi$)}$
 \STATE \underline{$\triangleright$ update model using collected data.}
-\STATE $\boldsymbol{env'} \gets \text{TRAIN\_SUPERVISED}(env', \mathbf{D})$
+\STATE $env' \gets \text{TRAIN\_SUPERVISED}(env', {D})$
 \STATE \underline{$\triangleright$ update policy using world model.}
-\STATE $\boldsymbol\pi \gets \text{TRAIN\_RL}(\boldsymbol\pi, env')$
+\STATE $\pi \gets \text{TRAIN\_RL}(\pi, env')$
 \ENDWHILE
 \end{algorithmic}
 \label{basic_loop}
