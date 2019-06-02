@@ -24,8 +24,6 @@ In search for an effective world model we have experimented with various archite
 Our basic architecture, presented as part of Figure~\ref{fig:full_discrete}, resembles the convolutional feedforward network from \citet{video_prediction}.  The input $X$ consists of four consecutive game frames and an action $a$. Stacked convolution layers process the visual input. The actions are one-hot-encoded and embedded in a vector which is multiplied channel-wise with the output of the convolutional layers. 
 The network outputs the next frame of the game and the value of the reward.%
 
-
-
 In our experiments, we varied details of the architecture above. In most cases, we use a stack of four convolutional layers with $64$ filters followed by three dense layers (the first two have $1024$ neurons). The dense layers are concatenated with $64$ dimensional vector with a learnable action embedding. Next, three deconvolutional layers of $64$ filters follow. An additional deconvolutional layer outputs an image of the original $105\times 80$ size. The number of filters is either $3$ or $3 \times 256$. In the first case, the output is a real-valued approximation of pixel's RGB value. In the second case, filters are followed by softmax producing a probability distribution on the color space. The reward is predicted by a softmax attached to the last fully connected layer. 
 We used dropout equal to $0.2$ and layer normalization. 
 
