@@ -1,64 +1,11 @@
-%\baselineskip
-% \newpage
-\clearpage 
+\clearpage
 \appendix
-
-% \section{Small comparison table (to be/not be included in main text.)}
-% \begin{center}
-% \setlength{\tabcolsep}{5pt}
-% \begin{table}[!htbp]
-% \scriptsize
-% \begin{tabular}{l|r|r|r|r}
-
-% Game &          SD  &     rainbow   &     human &          random \\
-
-% \midrule
-% Alien          &    405.2 &    290.6 &   7128.0 &    184.8 \\
-% Amidar         &     88.0 &     20.8 &   1720.0 &     11.8 \\
-% Assault        &    369.3 &    300.3 &    742.0 &    233.7 \\
-% Asterix        &   1089.5 &    285.7 &   8503.0 &    248.8 \\
-% Asteroids      &    731.0 &    912.3 &  47389.0 &    649.0 \\
-% Atlantis       &  14481.6 &  17881.8 &  29028.0 &  16492.0 \\
-% BankHeist      &      8.2 &     34.5 &    753.0 &     15.0 \\
-% BattleZone     &   5184.4 &   3363.5 &  37188.0 &   2895.0 \\
-% BeamRider      &    422.7 &    365.6 &  16926.0 &    372.1 \\
-% Bowling        &     34.4 &     24.7 &    161.0 &     24.2 \\
-% Boxing         &      9.1 &      0.9 &     12.0 &      0.3 \\
-% Breakout       &     12.7 &      3.3 &     30.0 &      0.9 \\
-% ChopperCommand &   1246.9 &    776.6 &   7388.0 &    671.0 \\
-% CrazyClimber   &  39827.8 &  12558.3 &  35829.0 &   7339.5 \\
-% DemonAttack    &    169.5 &    431.6 &   1971.0 &    140.0 \\
-% FishingDerby   &    -91.5 &    -91.1 &    -39.0 &    -93.6 \\
-% Freeway        &     20.3 &      0.1 &     30.0 &      0.0 \\
-% Frostbite      &    254.7 &    140.1 &      nan &     74.0 \\
-% Gopher         &    771.0 &    748.3 &   2412.0 &    245.9 \\
-% Gravitar       &    198.3 &    231.4 &   3351.0 &    227.2 \\
-% Hero           &   1295.1 &   2676.3 &  30826.0 &    224.6 \\
-% IceHockey      &    -10.5 &     -9.5 &      1.0 &     -9.7 \\
-% Jamesbond      &    125.3 &     61.7 &    303.0 &     29.2 \\
-% Kangaroo       &    323.1 &     38.7 &   3035.0 &     42.0 \\
-% Krull          &   4539.9 &   2978.8 &   2666.0 &   1543.3 \\
-% KungFuMaster   &  17257.2 &   1019.4 &  22736.0 &    616.5 \\
-% MsPacman       &    762.8 &    364.3 &   6952.0 &    235.2 \\
-% NameThisGame   &   1990.4 &   2368.2 &   8049.0 &   2136.8 \\
-% Pong           &      5.2 &    -19.5 &     15.0 &    -20.4 \\
-% PrivateEye     &     58.3 &     42.1 &  69571.0 &     26.6 \\
-% Qbert          &    559.8 &    235.6 &  13455.0 &    166.1 \\
-% Riverraid      &   1587.0 &   1904.2 &  17118.0 &   1451.0 \\
-% RoadRunner     &   5169.4 &    524.1 &   7845.0 &      0.0 \\
-% Seaquest       &    370.9 &    206.3 &  42055.0 &     61.1 \\
-% UpNDown        &   2152.6 &   1346.3 &  11693.0 &    488.4 \\
-% YarsRevenge    &   2980.2 &   3649.0 &  54577.0 &   3121.2 \\
-% \end{tabular}
-% \caption{Comparison of our method (SD) with dopamine and human performance.}
-% \end{table}
-% \end{center}
 
 \onecolumn
 \section{Numerical results}\label{numerical_results}
-Below we present numerical results of our experiments. We tested SimPLe on $7$ configurations (see description in Section \ref{sec:ablations}). For each configuration we run $5$ experiments. For the evaluation of the $i$-th experiments we used the policy given by $\text{softmax}(\text{logits}(\pi_i)/T)$, where  $\pi_i$ is the final learnt policy in the experiment and $T$ is the temperature parameter. We found empirically that $T=0.5$ worked best in most cases. A tentative explanation is that polices with temperatures smaller than $1$ are less stochastic and thus more stable. However, going down to $T=0$ proved to be detrimental in many cases as, possibly, it makes policies more prone to imperfections of models. 
+Below we present numerical results of our experiments. We tested SimPLe on $7$ configurations (see description in Section \ref{sec:ablations}). For each configuration we run $5$ experiments. For the evaluation of the $i$-th experiments we used the policy given by $\text{softmax}(\text{logits}(\pi_i)/T)$, where  $\pi_i$ is the final learnt policy in the experiment and $T$ is the temperature parameter. We found empirically that $T=0.5$ worked best in most cases. A tentative explanation is that polices with temperatures smaller than $1$ are less stochastic and thus more stable. However, going down to $T=0$ proved to be detrimental in many cases as, possibly, it makes policies more prone to imperfections of models.
 
-In Table \ref{tab:meanStdDev} we present the mean and standard deviation of the $5$ experiments. We observed that the median behaves rather similarly, which is reported it in Table \ref{tab:minmax}. In this table we also show maximal scores over $5$ runs. Interestingly, in many cases they turned out to be much higher. This, we hope, indicates that our methods has a further potential of reaching these higher scores. 
+In Table \ref{tab:meanStdDev} we present the mean and standard deviation of the $5$ experiments. We observed that the median behaves rather similarly, which is reported it in Table \ref{tab:minmax}. In this table we also show maximal scores over $5$ runs. Interestingly, in many cases they turned out to be much higher. This, we hope, indicates that our methods has a further potential of reaching these higher scores.
 
 Human scores are "Avg. Human" from Table 3 in \cite{Pohlenetal2018}.
 
