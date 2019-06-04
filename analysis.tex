@@ -134,11 +134,85 @@ In Figure \ref{fig:Cdf} we present the cumulative distribution plot for the (fir
 \label{fig:comp_recurr}
 \end{figure}
 
-NUMBER OF EPOCHS ABLATION
+% ================= Here goes NeurIPS version ===========
+
+\paragraph{Models.} To evaluate the model choice, we evaluated the following models: deterministic, deterministic recurrent, and stochastic discrete (see Section \ref{sec:architectures}). As can be seen, our proposed stochastic discrete model performs best. Figures \ref{fig:ablations1} (a) and (b) show the role of stochasticity and recurrence.  
+
+\paragraph{Steps.} See Figure \ref{fig:ablations1} (b). As described in Section \ref{sec:policy_training} every $N$ steps we reinitialize the simulated environment with ground-truth data. By default we use $N=50$, in some experiments 
+we set $N=25$ or $N=100$. It is clear from the table above and Figure~\ref{fig:ablations1}~(d) that $100$ is a bit worse than either $25$ or $50$, likely due to compounding model errors,
+but this effect is much smaller than the effect of model architecture.
+
+\paragraph{Gamma.} See Figure \ref{fig:ablations2} (d). We used the discount factor $\gamma=0.99$ unless specified otherwise.  We see that $\gamma=0.95$ is slightly better than other values, and we hypothesize that it is due to better tolerance to model imperfections. But overall, all three values of $\gamma$ seem to perform comparably at the same number of steps.
+
+\paragraph{Model-based iterations.}
+The iterative process of training the model, training the policy, and collecting data is crucial for non-trivial tasks where simple random data collection is insufficient. In the game-by-game analysis, we quantified the number of games where the best results were obtained in later iterations of training. In some games, good policies could be learned very early. While this might have been due simply to the high variability of training, it does suggest the possibility that much faster training -- in many fewer than 100k steps -- could be obtained in future work with more directed exploration policies. We leave this question to future work.
+
+In Figure \ref{fig:Cdf} we present the cumulative distribution plot for the (first) point during learning when the maximum score for the run was achieved in the main training loop of Algorithm~\ref{alg:basic_loop}. 
+
+On Figure \ref{fig:ablations1} (c) we show results for experiments in which the number samples was fixed to be 100K but the number of training loop varied. We conclude that $15$ is beneficial for training.
+
+
+\paragraph{Long model training} Our best results were obtained with much long training of models, see Figure \ref{fig:ablations2} (a) for comparison with shorter training. Due to our resources constraints other ablations were made with the short model training setting.
+
+\paragraph{Random starts.} Using short rollouts is crucial to mitigate the compounding errors under the model. To ensure exploration SimPLe starts rollouts from randomly selected states taken from the real data buffer $\textsc{D}$. In Figure \ref{fig:Cdf} we present a comparison with an experiment without random starts and rollouts of length $1000$ on \seaquest. These data strongly indicate that ablating random starts substantially deteriorate results.  
+
+
+\begin{table}
+\caption{Summary of SimPLe ablations, see text for details..}
+\begin{center}
+  \begin{tabular}{lrr}\label{tab:ab}
+model  &  best &  at least median \\
+% &       &                  \\
+\midrule
+deterministic       &     $0$ &                $7$ \\
+det. recurrent  &     $3$ &               $13$ \\
+%SV2P       &     0 &                1  \\
+SD         &     $8$ &               $16$ \\
+SD $\gamma=0.9$     &     $1$ &               $14$ \\
+default     &     $10$ &               $21$ \\
+SD $100$ steps    &     $0$ &               $14$ \\
+SD $25$ steps     &     $4$ &               $19$ \\
+\bottomrule
+\end{tabular} 
+\end{center}
+\end{table}
+
+
+\newcommand{\mywidth}{3.0in}
+\begin{figure}
+\begin{tabular}{cc}
+
+\subfloat[Effect of stochasticity.]{\includegraphics[width = \mywidth]{figures/graph_Effect_of_stochasticity.pdf}} &
+
+\subfloat[Effect of recurrent architecture]{\includegraphics[width = \mywidth]{figures/graph_Effect_of_a_recurrent_architecture.pdf}}  \\
+
+\subfloat[Effect of adjusting of number of epochs]{\includegraphics[width = \mywidth]{figures/graph_Effect_of_adjusting_number_of_main_loop_iterations.pdf}} &
+
+\subfloat[Effect of adjusting of number of steps.]{\includegraphics[width = \mywidth]{figures/graph_Effect_of_adjusting_number_of_steps.pdf}}
+\end{tabular}
+\caption{Ablations part 1 \label{fig:ablations1}}
+\end{figure}
+
+\begin{figure}
+\begin{tabular}{cc}
+\subfloat[Effect of extended model training.]{\includegraphics[width = \mywidth]{figures/graph_Effect_of_extended_model_training.pdf}} &
+
+
+\subfloat[Effect of adjusting $\gamma$ in PPO training]{\includegraphics[width = \mywidth]{figures/graph_Effect_of_adjusting_Gamma.pdf}}
+
+\end{tabular}
+\caption{Ablations part 2 \label{fig:ablations2}}
+\end{figure}
+% =================================
+
+
 
 \subsection{Number of Frames / Rainbow}\label{qualitative_analysis}
 
 What graph here?
+
+
+
 
 
 \subsection{Qualitative Analysis}\label{qualitative_analysis}
