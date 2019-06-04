@@ -104,10 +104,6 @@ In Figure \ref{fig:Cdf} we present the cumulative distribution plot for the (fir
 
 \paragraph{Random starts.} Using short rollouts is crucial to mitigate the compounding errors under the model. To ensure exploration SimPLe starts rollouts from randomly selected states taken from the real data buffer $\textsc{D}$. In Figure \ref{fig:Cdf} we present a comparison with an experiment without random starts and rollouts of length $1000$ on \seaquest. These data strongly indicate that ablating random starts substantially deteriorate results.  
 
-% \section{Effect of adjusting hyper-parameters} \label{appdx:ablatp}
-% \clearpage
-% \newpage
-
 \begin{figure}
 \centering
 \includegraphics[width=0.9\columnwidth]{figures/eval_sd_g90.png}
@@ -136,8 +132,6 @@ In Figure \ref{fig:Cdf} we present the cumulative distribution plot for the (fir
 \caption{Effect of adjusting number of steps, 25 vs 50.} 
 \label{fig:adj_steps_2}
 \end{figure}
-
-% \section{Effect of different designs for architecture}
 
 \begin{figure}
 \centering
@@ -176,42 +170,6 @@ The primary goal of our paper was to use model-based methods to achieve good per
 \paragraph{Exploration.}  \freeway\, is a particularly interesting game. Though simple, it presents a substantial exploration challenge. The chicken, controlled by the agents, is quite slow to ascend when exploring randomly as it constantly gets bumped down by the cars (see the left video \url{https://goo.gl/YHbKZ6}). This makes it very unlikely to fully cross the road and obtain a non-zero reward. Nevertheless, SimPLe is able to capture such rare events, internalize them into the predictive model and then successfully learn a successful policy.
 
 However, this good performance did not happen on every run. We conjecture the following scenario in failing cases. If at early stages the entropy of the policy decayed too rapidly the collected experience stayed limited leading to a poor world model, which was not powerful enough to support exploration (e.g. the chicken disappears when moving to high). In one of our experiments, we observed that the final policy was that the chicken moved up only to the second lane and stayed waiting to be hit by the car and so on so forth. 
-
-
-
-% %\begin{comment}
-% \begin{figure}[htbp]
-% \makebox[\columnwidth]{%
-% \includegraphics[width=0.24\columnwidth]{figures/FreewayDeterministic-v4__0}%
-% \hfill    
-% \includegraphics[width=0.24\columnwidth]{figures/FreewayDeterministic-v4__4.jpg}%
-% \hfill
-% \includegraphics[width=0.24\columnwidth]{figures/FreewayDeterministic-v4__6.jpg}%
-% \hfill    
-% \includegraphics[width=0.24\columnwidth]{figures/FreewayDeterministic-v4__8.jpg}%
-% }%
-% \caption{Four frames from the original \freeway\ environment. }
-% \label{fig:breakout_mode}
-% \end{figure}
-% % \end{comment}
-
-
-
-% \paragraph{\boxing} \boxing\  is a game in which two opponents engage in a boxing duel. We found this game to be quite challenging for our models. As can be seen in Figure~\ref{fig:boxing}, the sprite tends to reshape and often degenerates completely. We conjecture that this might be due to relatively complex graphical design of the sprites and the fact that they are quite big, beyond the receptive field of one deconvolution. Further, we speculate that the problem would exacerbate for more visually rich environments. 
-
-% \begin{figure}[htbp]
-% \makebox[\columnwidth]{%
-% \includegraphics[width=0.24\columnwidth]{figures/boxing_real_1.png}%
-% \hfill    
-% \includegraphics[width=0.24\columnwidth]{figures/boxing_real_2.png}%
-% \hfill
-% \includegraphics[width=0.24\columnwidth]{figures/boxing_model_1.png}%
-% \hfill    
-% \includegraphics[width=0.24\columnwidth]{figures/boxing_model_2.png}%
-% }%
-% \caption{Frames from the \boxing\ environment and its model. }
-% \label{fig:boxing}
-% \end{figure}
 
 \paragraph{Pixel-perfect games.} In some cases (for \pong, \freeway, \breakout) our models were able to predict the future perfectly, down to every pixel. This property holds for rather short time intervals, we observed episodes lasting up to 50 time-steps. Extending it to long sequences would be a very exciting research direction. See videos \url{https://goo.gl/uyfNnW}.
 
@@ -252,47 +210,3 @@ In \kungfumaster\, our model's predictions deviate from the real game by spawnin
 On some of the games, our models simply failed to produce useful predictions. We believe that listing such errors may be helpful in designing better training protocols and building better models. The most common failure was due to the presence of very small but highly relevant objects. For example, in \atlantis\, and \battlezone\, bullets are so small that they tend to disappear. Interestingly, \battlezone\, has pseudo-3D graphics, which may have added to the difficulty. See videos \url{https://goo.gl/uiccKU}.
 
 Another interesting example comes from \privateeye\, in which the agent traverses different scenes, teleporting from one to the other. We found that our model generally struggled to capture such large global changes.
-
-% \paragraph{\pong.} It is arguably one of the simplest Atari games. The player controls the green paddle. The red paddle is operated by the original game's AI. If the ball crosses the left end of the screen, then the green player scores a point. If the ball crosses the right end of the screen, then the red player scores a point. The total reward for the game is the difference between points scored by the green player and the red player. A full episode lasts until one of the agents scores 21 points.
-
-% \begin{figure}[htbp]
-% \makebox[\columnwidth]{%
-% \includegraphics[width=0.24\columnwidth]{figures/_pong1.png}%
-% \hfill    
-% \includegraphics[width=0.24\columnwidth]{figures/_pong2.png}%
-% \hfill
-% \includegraphics[width=0.24\columnwidth]{figures/_pong3.png}%
-% \hfill    
-% \includegraphics[width=0.24\columnwidth]{figures/_pong4.png}%
-% }%
-% \caption{Four pairs of frames from \pong. In each pair the left side comes from the model and right side is ground-truth. }
-% \label{fig:pong_original}
-% \end{figure}
-
-% Simple as it seems this game is a serious challenge for predictive modeling. The relevant objects, the paddles and the ball, are quite small. We observed various phenomena. When using the deterministic model it was often the case that the ball disappeared (similar behaviour was reported by \citet{recurrent}). For the stochastic discrete model this was seemingly less frequent, though other quirks happen. In Figure \ref{fig:pong_original} we can see the ball splitting on frame 3, later one of the balls disappears and the other continues to propagate in the direction opposite to the original one. 
-
-% In this case but also for other games, it happened that the stochastic discrete model spawns objects at (semi)-random positions. Interestingly, even though such a behaviour is clearly not ``physical'', such a dynamics is close to the original game in some sense. In fact in many cases we were able to train agents on such not-physical models, and they performed reasonably well on the original environments. 
-
-% \paragraph{\asterix}
-% In the game of \asterix\  the controlled character moves on the board, its aim is to collect valuable items which pass the board and avoid harmful ones. The agent dies when it collides with a harmful item, however no negative reward is given. In some of experiments we observed that the agent behaves in a suicidal manner, apparently being unaware of negative consequences of losing a life. We conjecture that such a long credit assignment might be challenging for our policy gradient algorithm, which uses short rollouts. It might be the case that the value based methods would handle the problem better.
-
-% \paragraph{\bankh} 
-% From the original description of the game: ``Your goal is to rob as many Banks as possible before running out of
-% Getaway Cars.  Disabling Cop Cars with dynamite increases your score. '' When dynamite explodes, the screen starts to blink and rapidly changes colors, including background.  
-% Our expectations was that any deterministic non-recurrent model should fail to model this event, because it lasts longer than 4 frames, but even our recurrent and stochastic models struggled to capture this behaviour as manifested by low scores in this game, see Figures \ref{fig:compare_dopamine} and \ref{fig:compare_ppo}.
-% %%SL.1.22: It's a little unclear to me how to interpret these last few sentences -- since we tried a stochastic model, are we saying that it does fix the problem, or not?
-
-% \begin{figure}[htbp]
-% \makebox[\columnwidth]{%
-% \includegraphics[width=0.95\columnwidth]{figures/random_starts_ablations}%
-% }%
-% \caption{Comparison of random starts vs no random starts on \seaquest. The vertical axis shows a mean reward and the horizontal axis the number of iterations of Algorithm \ref{alg:basic_loop}. }
-% \label{fig:sequest}
-% \end{figure}
-
-%\paragraph{Using dropout for policy}
-%\todo[]{LK: should we just drop this paragraph?}
-%Currently, a typical neural network used to encode the policy does not use regularization techniques, which are standard in the supervised learning. A reason for that is that RL training so far has been mostly performed for one environment and overfitting was not an important issue (actually in some cases adding regularization proved to be detrimental). Now-a-days the issue of generalization has been finally acknowledged (possibly cite arXiv:1804.06893 or arXiv:1812.02341). In our experiments there is important issue of the domain shift when switching from the simulated environment to the real one. To mittigate this we used aforementioned PPO training while collecting data for supervised learning and we used dropout in policy. To test the influence of the latter we made an experiment in which dropout was switched-off and \textbf{we hope for something meaningful}.
-
-% \subsection{Planner}
-% Having a model it is tempting to use it for planning. We run number of experiments to assess if the final policy can be improved using model-predictive control. In each step of a real environment a set of imaginary rollouts was collected using the policy. We found out that it is beneficial to make it more exploratory dividing the logits by a temperature parameter. For each rollout the score given by the sum of the collected rewards and the value function of the terminal state was assigned. The rollouts with the same first action were grouped and the mean of the their scores would be the score of this action. In some experiments added to this score and addition a UTC-like bonus. The table below presents preliminary results of our experiments. We conclude that \textbf{fill me, please}
