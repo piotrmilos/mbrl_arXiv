@@ -79,7 +79,7 @@ As for the number $N$ of \emph{steps} so that every $N$ steps we reinitialize th
 \paragraph{Models.} To evaluate the model choice, we evaluated the following models: deterministic, deterministic recurrent, and stochastic discrete (see Section \ref{sec:architectures}). As can be seen, our proposed stochastic discrete model performs best. Figures \ref{fig:effects_stocha} and \ref{fig:comp_recurr} show the role of stochasticity and recurrence. 
 
 \paragraph{Steps.} See Figures \ref{fig:adj_steps}. As described in Section \ref{sec:policy_training} every $N$ steps we reinitialize the simulated environment with ground-truth data. By default we use $N=50$, in some experiments 
-we set $N=25$ or $N=100$. It is clear from the table above and Figure~\ref{fig:100steps} that $100$ is a bit worse than either $25$ or $50$, likely due to compounding model errors,
+we set $N=25$ or $N=100$. It is clear from the table above and Figure~\ref{fig:adj_steps} that $100$ is a bit worse than either $25$ or $50$, likely due to compounding model errors,
 but this effect is much smaller than the effect of model architecture.
 
 \paragraph{Gamma.} See Figures \ref{fig:adj_gamma}. We used the discount factor $\gamma=0.99$ unless specified otherwise.  We see that $\gamma=0.95$ is slightly better than other values, and we hypothesize that it is due to better tolerance to model imperfections. But overall, all three values of $\gamma$ seem to perform comparably at the same number of steps.
