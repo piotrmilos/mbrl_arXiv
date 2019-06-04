@@ -94,7 +94,6 @@ On Figure \ref{fig:adj_loops} we show results for experiments in which the numbe
 
 \paragraph{Long model training} Our best results were obtained with much long training of models, see Figure \ref{fig:comp_long_train} for comparison with shorter training. Due to our resources constraints other ablations were made with the short model training setting.
 
-
 \paragraph{Random starts.} Using short rollouts is crucial to mitigate the compounding errors under the model. To ensure exploration SimPLe starts rollouts from randomly selected states taken from the real data buffer $\textsc{D}$. In Figure \ref{fig:Cdf} we present a comparison with an experiment without random starts and rollouts of length $1000$ on \seaquest. These data strongly indicate that ablating random starts substantially deteriorate results.  
 
 
@@ -140,33 +139,6 @@ On Figure \ref{fig:adj_loops} we show results for experiments in which the numbe
 \caption{Effect of extended model training.}
 \label{fig:comp_long_train}
 \end{figure}
-
-
-% ================= Here goes NeurIPS version ===========
-
-
-
-\begin{table}
-\caption{Summary of SimPLe ablations, see text for details..}
-\begin{center}
-  \begin{tabular}{lrr}\label{tab:ab}
-model  &  best &  at least median \\
-% &       &                  \\
-\midrule
-deterministic       &     $0$ &                $7$ \\
-det. recurrent  &     $3$ &               $13$ \\
-%SV2P       &     0 &                1  \\
-SD         &     $8$ &               $16$ \\
-SD $\gamma=0.9$     &     $1$ &               $14$ \\
-default     &     $10$ &               $21$ \\
-SD $100$ steps    &     $0$ &               $14$ \\
-SD $25$ steps     &     $4$ &               $19$ \\
-\bottomrule
-\end{tabular} 
-\end{center}
-\end{table}
-
-% =================================
 
 
 
