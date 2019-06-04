@@ -78,13 +78,13 @@ As for the number $N$ of \emph{steps} so that every $N$ steps we reinitialize th
 
 \paragraph{Models.} To evaluate the model choice, we evaluated the following models: deterministic, deterministic recurrent, and stochastic discrete (see Section \ref{sec:architectures}). As can be seen, our proposed stochastic discrete model performs best. Figures \ref{fig:effects_stocha} and \ref{fig:comp_recurr} show the role of stochasticity and recurrence. 
 
-% ====== moving line ===
 \paragraph{Steps.} See Figures \ref{fig:adj_steps}. As described in Section \ref{sec:policy_training} every $N$ steps we reinitialize the simulated environment with ground-truth data. By default we use $N=50$, in some experiments 
 we set $N=25$ or $N=100$. It is clear from the table above and Figure~\ref{fig:100steps} that $100$ is a bit worse than either $25$ or $50$, likely due to compounding model errors,
 but this effect is much smaller than the effect of model architecture.
 
-\paragraph{Gamma.} See Figures \ref{fig:adj_gamma}, \ref{fig:adj_gamma_2}. We used the discount factor $\gamma=0.99$ unless specified otherwise.  We see that $\gamma=0.95$ is slightly better than other values, and we hypothesize that it is due to better tolerance to model imperfections. But overall, all three values of $\gamma$ seem to perform comparably at the same number of steps.
+\paragraph{Gamma.} See Figures \ref{fig:adj_gamma}. We used the discount factor $\gamma=0.99$ unless specified otherwise.  We see that $\gamma=0.95$ is slightly better than other values, and we hypothesize that it is due to better tolerance to model imperfections. But overall, all three values of $\gamma$ seem to perform comparably at the same number of steps.
 
+% ====== moving line ===
 \paragraph{Model-based iterations.}
 The iterative process of training the model, training the policy, and collecting data is crucial for non-trivial tasks where simple random data collection is insufficient. In the game-by-game analysis, we quantified the number of games where the best results were obtained in later iterations of training. In some games, good policies could be learned very early. While this might have been due simply to the high variability of training, it does suggest the possibility that much faster training -- in many fewer than 100k steps -- could be obtained in future work with more directed exploration policies. We leave this question to future work.
 
@@ -94,16 +94,9 @@ In Figure \ref{fig:Cdf} we present the cumulative distribution plot for the (fir
 
 \begin{figure}
 \centering
-\includegraphics[width=0.9\columnwidth]{figures/eval_sd_g90.png}
-\caption{Effect of adjusting $\gamma$, $0.9$ vs $0.99$.} 
+\includegraphics[width=0.9\columnwidth]{figures/graph_Effect_of_adjusting_Gamma.pdf}
+\caption{Effect of adjusting $\gamma$.} 
 \label{fig:adj_gamma}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[width=0.9\columnwidth]{figures/eval_sd_g95.png}
-\caption{Effect of adjusting $\gamma$, $0.95$ vs $0.99$.} 
-\label{fig:adj_gamma_2}
 \end{figure}
 
 \begin{figure}
@@ -129,9 +122,6 @@ In Figure \ref{fig:Cdf} we present the cumulative distribution plot for the (fir
 \end{figure}
 
 % ================= Here goes NeurIPS version ===========
-
-
-\paragraph{Gamma.} See Figure \ref{fig:ablations2} (d). We used the discount factor $\gamma=0.99$ unless specified otherwise.  We see that $\gamma=0.95$ is slightly better than other values, and we hypothesize that it is due to better tolerance to model imperfections. But overall, all three values of $\gamma$ seem to perform comparably at the same number of steps.
 
 \paragraph{Model-based iterations.}
 The iterative process of training the model, training the policy, and collecting data is crucial for non-trivial tasks where simple random data collection is insufficient. In the game-by-game analysis, we quantified the number of games where the best results were obtained in later iterations of training. In some games, good policies could be learned very early. While this might have been due simply to the high variability of training, it does suggest the possibility that much faster training -- in many fewer than 100k steps -- could be obtained in future work with more directed exploration policies. We leave this question to future work.
@@ -183,7 +173,7 @@ SD $25$ steps     &     $4$ &               $19$ \\
 \subfloat[Effect of extended model training.]{\includegraphics[width = \mywidth]{figures/graph_Effect_of_extended_model_training.pdf}} &
 
 
-\subfloat[Effect of adjusting $\gamma$ in PPO training]{\includegraphics[width = \mywidth]{figures/graph_Effect_of_adjusting_Gamma.pdf}}
+\subfloat[Remove]{\includegraphics[width = \mywidth]{figures/graph_Effect_of_adjusting_Gamma.pdf}}
 
 \end{tabular}
 \caption{Ablations part 2 \label{fig:ablations2}}
