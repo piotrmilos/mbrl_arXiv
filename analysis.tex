@@ -92,6 +92,9 @@ In Figure \ref{fig:Cdf} we present the cumulative distribution plot for the (fir
 
 On Figure \ref{fig:adj_loops} we show results for experiments in which the number samples was fixed to be 100K but the number of training loop varied. We conclude that $15$ is beneficial for training.
 
+\paragraph{Long model training} Our best results were obtained with much long training of models, see Figure \ref{fig:comp_long_train} for comparison with shorter training. Due to our resources constraints other ablations were made with the short model training setting.
+
+
 % ====== moving line ===
 
 \paragraph{Random starts.} Using short rollouts is crucial to mitigate the compounding errors under the model. To ensure exploration SimPLe starts rollouts from randomly selected states taken from the real data buffer $\textsc{D}$. In Figure \ref{fig:Cdf} we present a comparison with an experiment without random starts and rollouts of length $1000$ on \seaquest. These data strongly indicate that ablating random starts substantially deteriorate results.  
@@ -132,10 +135,15 @@ On Figure \ref{fig:adj_loops} we show results for experiments in which the numbe
 \label{fig:comp_recurr}
 \end{figure}
 
+\begin{figure}
+\centering
+\includegraphics[width=0.9\columnwidth]{figures/graph_Effect_of_extended_model_training.pdf}
+\caption{Effect of extended model training.}
+\label{fig:comp_long_train}
+\end{figure}
+
+
 % ================= Here goes NeurIPS version ===========
-
-
-\paragraph{Long model training} Our best results were obtained with much long training of models, see Figure \ref{fig:ablations2} (a) for comparison with shorter training. Due to our resources constraints other ablations were made with the short model training setting.
 
 \paragraph{Random starts.} Using short rollouts is crucial to mitigate the compounding errors under the model. To ensure exploration SimPLe starts rollouts from randomly selected states taken from the real data buffer $\textsc{D}$. In Figure \ref{fig:Cdf} we present a comparison with an experiment without random starts and rollouts of length $1000$ on \seaquest. These data strongly indicate that ablating random starts substantially deteriorate results.  
 
@@ -165,7 +173,7 @@ SD $25$ steps     &     $4$ &               $19$ \\
 
 \begin{figure}
 \begin{tabular}{cc}
-\subfloat[Effect of extended model training.]{\includegraphics[width = \mywidth]{figures/graph_Effect_of_extended_model_training.pdf}} &
+\subfloat[Removed]{\includegraphics[width = \mywidth]{figures/graph_Effect_of_extended_model_training.pdf}} &
 
 
 \subfloat[Remove]{\includegraphics[width = \mywidth]{figures/graph_Effect_of_adjusting_Gamma.pdf}}
