@@ -84,11 +84,15 @@ but this effect is much smaller than the effect of model architecture.
 
 \paragraph{Gamma.} See Figures \ref{fig:adj_gamma}. We used the discount factor $\gamma=0.99$ unless specified otherwise.  We see that $\gamma=0.95$ is slightly better than other values, and we hypothesize that it is due to better tolerance to model imperfections. But overall, all three values of $\gamma$ seem to perform comparably at the same number of steps.
 
-% ====== moving line ===
+
 \paragraph{Model-based iterations.}
 The iterative process of training the model, training the policy, and collecting data is crucial for non-trivial tasks where simple random data collection is insufficient. In the game-by-game analysis, we quantified the number of games where the best results were obtained in later iterations of training. In some games, good policies could be learned very early. While this might have been due simply to the high variability of training, it does suggest the possibility that much faster training -- in many fewer than 100k steps -- could be obtained in future work with more directed exploration policies. We leave this question to future work.
 
 In Figure \ref{fig:Cdf} we present the cumulative distribution plot for the (first) point during learning when the maximum score for the run was achieved in the main training loop of Algorithm~\ref{alg:basic_loop}.
+
+On Figure \ref{fig:adj_loops} we show results for experiments in which the number samples was fixed to be 100K but the number of training loop varied. We conclude that $15$ is beneficial for training.
+
+% ====== moving line ===
 
 \paragraph{Random starts.} Using short rollouts is crucial to mitigate the compounding errors under the model. To ensure exploration SimPLe starts rollouts from randomly selected states taken from the real data buffer $\textsc{D}$. In Figure \ref{fig:Cdf} we present a comparison with an experiment without random starts and rollouts of length $1000$ on \seaquest. These data strongly indicate that ablating random starts substantially deteriorate results.  
 
@@ -104,8 +108,15 @@ In Figure \ref{fig:Cdf} we present the cumulative distribution plot for the (fir
 \includegraphics[width=0.9\columnwidth]{figures/graph_Effect_of_adjusting_number_of_steps.pdf}
 \caption{Effect of adjusting number of steps.} 
 \label{fig:adj_steps}
-\label{fig:100steps}
 \end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.9\columnwidth]{figures/graph_Effect_of_adjusting_number_of_main_loop_iterations.pdf}
+\caption{Effect of adjusting number of training loops.} 
+\label{fig:adj_loops}
+\end{figure}
+
 
 \begin{figure}
 \centering
@@ -122,13 +133,6 @@ In Figure \ref{fig:Cdf} we present the cumulative distribution plot for the (fir
 \end{figure}
 
 % ================= Here goes NeurIPS version ===========
-
-\paragraph{Model-based iterations.}
-The iterative process of training the model, training the policy, and collecting data is crucial for non-trivial tasks where simple random data collection is insufficient. In the game-by-game analysis, we quantified the number of games where the best results were obtained in later iterations of training. In some games, good policies could be learned very early. While this might have been due simply to the high variability of training, it does suggest the possibility that much faster training -- in many fewer than 100k steps -- could be obtained in future work with more directed exploration policies. We leave this question to future work.
-
-In Figure \ref{fig:Cdf} we present the cumulative distribution plot for the (first) point during learning when the maximum score for the run was achieved in the main training loop of Algorithm~\ref{alg:basic_loop}. 
-
-On Figure \ref{fig:ablations1} (c) we show results for experiments in which the number samples was fixed to be 100K but the number of training loop varied. We conclude that $15$ is beneficial for training.
 
 
 \paragraph{Long model training} Our best results were obtained with much long training of models, see Figure \ref{fig:ablations2} (a) for comparison with shorter training. Due to our resources constraints other ablations were made with the short model training setting.
@@ -158,15 +162,6 @@ SD $25$ steps     &     $4$ &               $19$ \\
 
 
 \newcommand{\mywidth}{3.0in}
-\begin{figure}
-\begin{tabular}{cc}
-
-\subfloat[Effect of adjusting of number of epochs]{\includegraphics[width = \mywidth]{figures/graph_Effect_of_adjusting_number_of_main_loop_iterations.pdf}} &
-
-\subfloat[Removed.]{\includegraphics[width = \mywidth]{figures/graph_Effect_of_adjusting_number_of_steps.pdf}}
-\end{tabular}
-\caption{Ablations part 1 \label{fig:ablations1}}
-\end{figure}
 
 \begin{figure}
 \begin{tabular}{cc}
