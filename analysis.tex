@@ -78,7 +78,8 @@ As for the number $N$ of \emph{steps} so that every $N$ steps we reinitialize th
 
 \paragraph{Models.} To evaluate the model choice, we evaluated the following models: deterministic, deterministic recurrent, and stochastic discrete (see Section \ref{sec:architectures}). As can be seen, our proposed stochastic discrete model performs best. Figures \ref{fig:effects_stocha} and \ref{fig:comp_recurr} show the role of stochasticity and recurrence. 
 
-\paragraph{Steps.} See Figures \ref{fig:adj_steps}, \ref{fig:adj_steps_2}. As described in Section \ref{sec:policy_training} every $N$ steps we reinitialize the simulated environment with ground-truth data. By default we use $N=50$, in some experiments 
+% ====== moving line ===
+\paragraph{Steps.} See Figures \ref{fig:adj_steps}. As described in Section \ref{sec:policy_training} every $N$ steps we reinitialize the simulated environment with ground-truth data. By default we use $N=50$, in some experiments 
 we set $N=25$ or $N=100$. It is clear from the table above and Figure~\ref{fig:100steps} that $100$ is a bit worse than either $25$ or $50$, likely due to compounding model errors,
 but this effect is much smaller than the effect of model architecture.
 
@@ -107,17 +108,10 @@ In Figure \ref{fig:Cdf} we present the cumulative distribution plot for the (fir
 
 \begin{figure}
 \centering
-\includegraphics[width=0.9\columnwidth]{figures/eval_sd_s100.png}
-\caption{Effect of adjusting number of steps, 50 vs 100.} 
+\includegraphics[width=0.9\columnwidth]{figures/graph_Effect_of_adjusting_number_of_steps.pdf}
+\caption{Effect of adjusting number of steps.} 
 \label{fig:adj_steps}
 \label{fig:100steps}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[width=0.9\columnwidth]{figures/eval_sd_s25.png}
-\caption{Effect of adjusting number of steps, 25 vs 50.} 
-\label{fig:adj_steps_2}
 \end{figure}
 
 \begin{figure}
@@ -136,10 +130,6 @@ In Figure \ref{fig:Cdf} we present the cumulative distribution plot for the (fir
 
 % ================= Here goes NeurIPS version ===========
 
-
-\paragraph{Steps.} See Figure \ref{fig:ablations1} (b). As described in Section \ref{sec:policy_training} every $N$ steps we reinitialize the simulated environment with ground-truth data. By default we use $N=50$, in some experiments 
-we set $N=25$ or $N=100$. It is clear from the table above and Figure~\ref{fig:ablations1}~(d) that $100$ is a bit worse than either $25$ or $50$, likely due to compounding model errors,
-but this effect is much smaller than the effect of model architecture.
 
 \paragraph{Gamma.} See Figure \ref{fig:ablations2} (d). We used the discount factor $\gamma=0.99$ unless specified otherwise.  We see that $\gamma=0.95$ is slightly better than other values, and we hypothesize that it is due to better tolerance to model imperfections. But overall, all three values of $\gamma$ seem to perform comparably at the same number of steps.
 
@@ -183,7 +173,7 @@ SD $25$ steps     &     $4$ &               $19$ \\
 
 \subfloat[Effect of adjusting of number of epochs]{\includegraphics[width = \mywidth]{figures/graph_Effect_of_adjusting_number_of_main_loop_iterations.pdf}} &
 
-\subfloat[Effect of adjusting of number of steps.]{\includegraphics[width = \mywidth]{figures/graph_Effect_of_adjusting_number_of_steps.pdf}}
+\subfloat[Removed.]{\includegraphics[width = \mywidth]{figures/graph_Effect_of_adjusting_number_of_steps.pdf}}
 \end{tabular}
 \caption{Ablations part 1 \label{fig:ablations1}}
 \end{figure}
