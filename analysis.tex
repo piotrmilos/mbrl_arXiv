@@ -71,28 +71,10 @@ The results in these figures and Table \ref{tab:shortNumericalResults} are gener
 
 \subsection{Ablations}\label{sec:ablations}
 
-To evaluate the design of our method, we independently varied a number of the design decisions: the choice of the model, the $\gamma$ parameter and the length of PPO rollouts. The results for $7$ experimental configurations are summarized in the table below. 
+To evaluate the design of our method, we independently varied a number of the design decisions: the choice of the model, the $\gamma$ parameter, the length of PPO rollouts and the length of model training.
 
-For each game, a configuration was assigned a score being the mean over $5$ experiments. The best and median scores were calculated per game. The columns report the number of games a given configuration achieved the best score or at least the median score, respectively. 
-
-\begin{table}[t]
-\begin{center} 
-  \begin{tabular}{lrr}\label{tab:ab}
-model  &  best &  at\_least\_median \\
-% &       &                  \\
-\midrule
-deterministic       &     $0$ &                $7$ \\
-det. recurrent  &     $3$ &               $13$ \\
-%SV2P       &     0 &                1  \\
-SD         &     $8$ &               $16$ \\
-SD $\gamma=0.9$     &     $1$ &               $14$ \\
-default     &     $10$ &               $21$ \\
-SD $100$ steps    &     $0$ &               $14$ \\
-SD $25$ steps     &     $4$ &               $19$ \\
-\end{tabular} 
-\end{center}
-\caption{By default SimPLe uses rollouts of $50$ steps  generated with the stochastic discrete model and is trained with $\gamma=0.95$.}
-\end{table}
+As for choosing the \emph{model architecture}, we evaluated a few choices and our proposed stochastic discrete model performs best by a significant margin.
+As for the number $N$ of \emph{steps} so that every $N$ steps we reinitialize the simulated environment with ground-truth data, we use $N=50$ by default. We experimented with $N=25$ or $N=100$ and $100$ is a bit worse than either $25$ or $50$ (which are on par), likely due to compounding model errors, but this effect is much smaller than the effect of model architecture. The \emph{discount factor} $\gamma=0.99$ unless specified otherwise.  We see that $\gamma=0.95$ is slightly better than other values, and we hypothesize that it is due to better tolerance to model imperfections. But overall, all three values of $\gamma$ perform comparably at the same number of steps.
 
 \paragraph{Models.} To evaluate the model choice, we evaluated the following models: deterministic, deterministic recurrent, and stochastic discrete (see Section \ref{sec:architectures}). As can be seen, our proposed stochastic discrete model performs best. Figures \ref{fig:effects_stocha} and \ref{fig:comp_recurr} show the role of stochasticity and recurrence.  
 
