@@ -95,9 +95,8 @@ On Figure \ref{fig:adj_loops} we show results for experiments in which the numbe
 \paragraph{Long model training} Our best results were obtained with much long training of models, see Figure \ref{fig:comp_long_train} for comparison with shorter training. Due to our resources constraints other ablations were made with the short model training setting.
 
 
-% ====== moving line ===
-
 \paragraph{Random starts.} Using short rollouts is crucial to mitigate the compounding errors under the model. To ensure exploration SimPLe starts rollouts from randomly selected states taken from the real data buffer $\textsc{D}$. In Figure \ref{fig:Cdf} we present a comparison with an experiment without random starts and rollouts of length $1000$ on \seaquest. These data strongly indicate that ablating random starts substantially deteriorate results.  
+
 
 \begin{figure}
 \centering
@@ -145,7 +144,6 @@ On Figure \ref{fig:adj_loops} we show results for experiments in which the numbe
 
 % ================= Here goes NeurIPS version ===========
 
-\paragraph{Random starts.} Using short rollouts is crucial to mitigate the compounding errors under the model. To ensure exploration SimPLe starts rollouts from randomly selected states taken from the real data buffer $\textsc{D}$. In Figure \ref{fig:Cdf} we present a comparison with an experiment without random starts and rollouts of length $1000$ on \seaquest. These data strongly indicate that ablating random starts substantially deteriorate results.  
 
 
 \begin{table}
@@ -168,19 +166,6 @@ SD $25$ steps     &     $4$ &               $19$ \\
 \end{center}
 \end{table}
 
-
-\newcommand{\mywidth}{3.0in}
-
-\begin{figure}
-\begin{tabular}{cc}
-\subfloat[Removed]{\includegraphics[width = \mywidth]{figures/graph_Effect_of_extended_model_training.pdf}} &
-
-
-\subfloat[Remove]{\includegraphics[width = \mywidth]{figures/graph_Effect_of_adjusting_Gamma.pdf}}
-
-\end{tabular}
-\caption{Ablations part 2 \label{fig:ablations2}}
-\end{figure}
 % =================================
 
 
