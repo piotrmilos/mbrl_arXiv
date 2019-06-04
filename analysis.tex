@@ -70,6 +70,8 @@ The results in these figures and Table \ref{tab:shortNumericalResults} are gener
 \textbf{Number of frames.} We focused our work on learning games with $100$K interaction steps with the environment, but we also studied settings with $20$K, $50$K, $200$K, $500$K and $1$M interactions. Our results are poor with $20$K interactions, but already almost as good with $50$K as with $100$K interactions. From there they improve with more interactions but above $200$K it becomes competitive to model-free RL starting from a policy pre-trained with SimPLe, see Appendix~\ref{appdx:num_samples} for details.
 
 \subsection{Ablations}\label{sec:ablations}
+%TODO(pm):This section should be carefully reviewed
+%TODOO(pm):The order of paragraphs should be possibly changed
 
 To evaluate the design of our method, we independently varied a number of the design decisions: the choice of the model, the $\gamma$ parameter, the length of PPO rollouts and the length of model training.
 
@@ -139,15 +141,6 @@ On Figure \ref{fig:adj_loops} we show results for experiments in which the numbe
 \caption{Effect of extended model training.}
 \label{fig:comp_long_train}
 \end{figure}
-
-
-
-\subsection{Number of Frames / Rainbow}\label{qualitative_analysis}
-
-What graph here?
-
-
-
 
 
 \subsection{Qualitative Analysis}\label{qualitative_analysis}
