@@ -76,7 +76,7 @@ To evaluate the design of our method, we independently varied a number of the de
 As for choosing the \emph{model architecture}, we evaluated a few choices and our proposed stochastic discrete model performs best by a significant margin.
 As for the number $N$ of \emph{steps} so that every $N$ steps we reinitialize the simulated environment with ground-truth data, we use $N=50$ by default. We experimented with $N=25$ or $N=100$ and $100$ is a bit worse than either $25$ or $50$ (which are on par), likely due to compounding model errors, but this effect is much smaller than the effect of model architecture. The \emph{discount factor} $\gamma=0.99$ unless specified otherwise.  We see that $\gamma=0.95$ is slightly better than other values, and we hypothesize that it is due to better tolerance to model imperfections. But overall, all three values of $\gamma$ perform comparably at the same number of steps.
 
-\paragraph{Models.} To evaluate the model choice, we evaluated the following models: deterministic, deterministic recurrent, and stochastic discrete (see Section \ref{sec:architectures}). As can be seen, our proposed stochastic discrete model performs best. Figures \ref{fig:effects_stocha} and \ref{fig:comp_recurr} show the role of stochasticity and recurrence.  
+\paragraph{Models.} To evaluate the model choice, we evaluated the following models: deterministic, deterministic recurrent, and stochastic discrete (see Section \ref{sec:architectures}). As can be seen, our proposed stochastic discrete model performs best. Figures \ref{fig:effects_stocha} and \ref{fig:comp_recurr} show the role of stochasticity and recurrence. 
 
 \paragraph{Steps.} See Figures \ref{fig:adj_steps}, \ref{fig:adj_steps_2}. As described in Section \ref{sec:policy_training} every $N$ steps we reinitialize the simulated environment with ground-truth data. By default we use $N=50$, in some experiments 
 we set $N=25$ or $N=100$. It is clear from the table above and Figure~\ref{fig:100steps} that $100$ is a bit worse than either $25$ or $50$, likely due to compounding model errors,
@@ -122,21 +122,20 @@ In Figure \ref{fig:Cdf} we present the cumulative distribution plot for the (fir
 
 \begin{figure}
 \centering
-\includegraphics[width=0.9\columnwidth]{figures/eval_long.png}
+\includegraphics[width=0.9\columnwidth]{figures/graph_Effect_of_stochasticity.pdf}
 \caption{Effect of stochasticity.} 
 \label{fig:effects_stocha}
 \end{figure}
 
 \begin{figure}
 \centering
-\includegraphics[width=0.9\columnwidth]{figures/eval_recurrent.png}
-\caption{Comparison with a recurrent model.}
+\includegraphics[width=0.9\columnwidth]{figures/graph_Effect_of_a_recurrent_architecture.pdf}
+\caption{Effect of recurrence.}
 \label{fig:comp_recurr}
 \end{figure}
 
 % ================= Here goes NeurIPS version ===========
 
-\paragraph{Models.} To evaluate the model choice, we evaluated the following models: deterministic, deterministic recurrent, and stochastic discrete (see Section \ref{sec:architectures}). As can be seen, our proposed stochastic discrete model performs best. Figures \ref{fig:ablations1} (a) and (b) show the role of stochasticity and recurrence.  
 
 \paragraph{Steps.} See Figure \ref{fig:ablations1} (b). As described in Section \ref{sec:policy_training} every $N$ steps we reinitialize the simulated environment with ground-truth data. By default we use $N=50$, in some experiments 
 we set $N=25$ or $N=100$. It is clear from the table above and Figure~\ref{fig:ablations1}~(d) that $100$ is a bit worse than either $25$ or $50$, likely due to compounding model errors,
@@ -181,10 +180,6 @@ SD $25$ steps     &     $4$ &               $19$ \\
 \newcommand{\mywidth}{3.0in}
 \begin{figure}
 \begin{tabular}{cc}
-
-\subfloat[Effect of stochasticity.]{\includegraphics[width = \mywidth]{figures/graph_Effect_of_stochasticity.pdf}} &
-
-\subfloat[Effect of recurrent architecture]{\includegraphics[width = \mywidth]{figures/graph_Effect_of_a_recurrent_architecture.pdf}}  \\
 
 \subfloat[Effect of adjusting of number of epochs]{\includegraphics[width = \mywidth]{figures/graph_Effect_of_adjusting_number_of_main_loop_iterations.pdf}} &
 
