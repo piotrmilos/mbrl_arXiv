@@ -14,7 +14,7 @@ to run our experiments.\footnote{\url{https://github.com/tensorflow/tensor2tenso
 
 %TODO(pm): remove the paragraph below. If it is indeed negligible why to mention?
 At every iteration, the latest policy trained under the learned model is used to collect data in the real environment $\env$.
-Due to vast difference between number of training data from simulated environment $env'$ and real environment $env$ -- 15M vs 100K
+Due to the vast difference between the number of training data from simulated environment $env'$ and real environment $env$ -- 15M vs 100K
 -- we believe that the impact of real data on policy is negligible.
 
  We evaluate our method on $26$ games selected on the basis of being solvable with existing state-of-the-art model-free deep RL algorithms\footnote{Specifically, for the final evaluation we selected games which achieved non-random results using our method or the Rainbow algorithm using $100$K interactions.}, which in our comparisons are Rainbow~\cite{rainbow} and PPO~\cite{ppo}.
