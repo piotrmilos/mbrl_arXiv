@@ -31,7 +31,7 @@ Human scores are "Avg. Human" from Table 3 in \cite{Pohlenetal2018}.
 \setlength{\tabcolsep}{5pt}
 \begin{table}[!htbp]
 \scriptsize
-\begin{tabular}{l|rl|rl|rl|rl|rl|rl|rl|rl|c|c}
+\begin{tabular}{l|rlrlrlrlrlrlrlrlcc}
 
 Game & \multicolumn{2}{c}{Ours, deterministic}  &  \multicolumn{2}{c}{Ours, det. recurrent}   & \multicolumn{2}{c}{Ours, SD long} &     \multicolumn{2}{c}{Ours, SD} &     \multicolumn{2}{c}{Ours, SD $\gamma=0.90$}   &     \multicolumn{2}{c}{Ours, SD $\gamma=0.95$} & \multicolumn{2}{c}{Ours, SD 100 steps} &     \multicolumn{2}{c}{Ours, SD 25 steps} &  random & human\\
 %
@@ -81,7 +81,6 @@ YarsRevenge    &   3014.9 &   (397.4) &   3291.4 &   (1097.3) &\textbf{   5664.3
 \end{changemargin}
 \end{landscape}
 
-%TODO(pm): Check if this table is correctg
 \begin{landscape}
 \begin{changemargin}{0cm}{0cm}
 \begin{center}
@@ -90,10 +89,9 @@ YarsRevenge    &   3014.9 &   (397.4) &   3291.4 &   (1097.3) &\textbf{   5664.3
 \setlength{\tabcolsep}{5pt}
 \begin{table}[!htbp]
 \scriptsize
-\caption{Comparison of our method (SimPLe) with model-free benchmarks - PPO and Rainbow, trained with 100 thousands/500 thousands/1 million steps. (1 step equals 4 frames)}
-\begin{tabular}{lrlrlrlrlrlrlrlcc}
+\begin{tabular}{l|rlrlrlrlrlrlrlcc}
 
-Game &          \multicolumn{2}{c}{SimPLe}  &     \multicolumn{2}{c}{PPO\_100k}   &     \multicolumn{2}{c}{PPO\_500k} &     \multicolumn{2}{c}{PPO\_1m}   &     \multicolumn{2}{c}{Rainbow\_100k} &          \multicolumn{2}{c}{Rainbow\_500k}	&     \multicolumn{2}{c}{Rainbow\_1m} &		random &		human\\
+Game & \multicolumn{2}{c}{Ours, SD long}  &     \multicolumn{2}{c}{PPO\_100k}   &     \multicolumn{2}{c}{PPO\_500k} &     \multicolumn{2}{c}{PPO\_1m}   &     \multicolumn{2}{c}{Rainbow\_100k} &          \multicolumn{2}{c}{Rainbow\_500k}	&     \multicolumn{2}{c}{Rainbow\_1m} &		random &		human\\
 
 
 \midrule
@@ -154,7 +152,7 @@ YarsRevenge    &   5664.3 &   (1870.5) &   5182.0 &  (1209.3) &     8064.8 &    
 \setlength{\tabcolsep}{5pt}
 \begin{table}[!htbp]
 \scriptsize
-\begin{tabular}{l|rl|rl|rl|rl|rl|rl|rl|rl|c|c}
+\begin{tabular}{l|rlrlrlrlrlrlrlrlcc}
 
 Game &          \multicolumn{2}{c}{Ours, deterministic}  &     \multicolumn{2}{c}{Ours, det. recurrent}   &     \multicolumn{2}{c}{Ours, SD  long}   &     \multicolumn{2}{c}{Ours, SD} &     \multicolumn{2}{c}{Ours, SD $\gamma=0.90$}   &     \multicolumn{2}{c}{Ours, SD $\gamma=0.95$} &          \multicolumn{2}{c}{SD 100 steps}	&     \multicolumn{2}{c}{Ours, SD 25 steps} &		random &		human\\
 \midrule
