@@ -86,10 +86,7 @@ The results in these figures and Table \ref{tab:shortNumericalResults} are gener
 %TODO(pm):This section should be carefully reviewed
 %TODO(pm):The order of paragraphs should be possibly changed
 
-To evaluate the design of our method, we independently varied a number of the design decisions: the choice of the model, the $\gamma$ parameter, the length of PPO rollouts and the length of model training.
-
-As for choosing the \emph{model architecture}, we evaluated a few choices and our proposed stochastic discrete model performs best by a significant margin.
-As for the number $N$ of \emph{steps} so that every $N$ steps we reinitialize the simulated environment with ground-truth data, we use $N=50$ by default. We experimented with $N=25$ or $N=100$ and $100$ is a bit worse than either $25$ or $50$ (which are on par), likely due to compounding model errors, but this effect is much smaller than the effect of the model architecture. The \emph{discount factor} $\gamma=0.99$ unless specified otherwise.  We see that $\gamma=0.95$ is slightly better than other values, and we hypothesize that it is due to a better tolerance to model imperfections. But overall, all three values of $\gamma$ perform comparably at the same number of steps.
+To evaluate the design of our method, we independently varied a number of the design decisions.
 
 \paragraph{Models.} To evaluate the model choice, we evaluated the following models: deterministic, deterministic recurrent, and stochastic discrete (see Section \ref{sec:architectures}). As can be seen, our proposed stochastic discrete model performs best. Figures \ref{fig:effects_stocha} and \ref{fig:comp_recurr} show the role of stochasticity and recurrence. 
 
