@@ -16,7 +16,7 @@ to run our experiments.\footnote{\url{https://github.com/tensorflow/tensor2tenso
 
 At every iteration, the latest policy trained under the learned model is used to collect data in the real environment $\env$.
 
- We evaluate our method on $26$ games selected on the basis of being solvable with existing state-of-the-art model-free deep RL algorithms\footnote{Specifically, for the final evaluation we selected games which achieved non-random results using our method or the Rainbow algorithm using $100$K interactions.}, which in our comparisons are Rainbow~\cite{rainbow} and PPO~\cite{ppo}.
+ We evaluate our method on $26$ games selected on the basis of being solvable with existing state-of-the-art model-free deep RL algorithms\footnote{Specifically, for the final evaluation we selected games which achieved non-random results using our method or the Rainbow algorithm using $100$K interactions. In section \ref{numerical_results} we provide numerical results for a bigger suite of $36$ games.}, which in our comparisons are Rainbow~\cite{rainbow} and PPO~\cite{ppo}.
  For Rainbow, we used the implementation from the Dopamine package and spent considerable
  time tuning it for sample efficiency.
 
