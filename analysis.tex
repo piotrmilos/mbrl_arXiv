@@ -1,4 +1,4 @@
-%!TEX root = /Users/piotrmilos/PycharmProjects/untitled/arXiv/main.tex
+%!TEX root = main.tex
 \section{Analysis}
 \label{sec:analysis}
 
@@ -38,12 +38,11 @@ Seaquest       &    683.3 &    206.3 &    692.0 &  42055.0 &    61.1 \\
 UpNDown        &   3350.3 &   1346.3 &  12126.0 &  11693.0 &   488.4 \\
 
 \end{tabular}
-\caption{Mean scores obtained by our method (SimPLe) in comparison with Rainbow trained on 100K steps (400K frames) and PPO trained on 500K steps (2 millions frames). Details and extended numerical results are included in Appendix~\ref{numerical_results}.}
+\caption{Mean scores obtained by our method (SimPLe) in comparison with Rainbow trained on 100K steps (400K frames) and PPO trained on 500K steps (2 millions frames). The SimPLe results in this table correspond to the SD long columns in extended numerical results presented in Appendix~\ref{numerical_results}}
 \label{tab:shortNumericalResults}
 \end{table}
 
 In this section, we analyze the results of our experiments. Our goals are to study how much model-based reinforcement learning can improve over the efficiency of current model-free deep reinforcement learning algorithms, analyze the quality of the predictions made by our model, and examine the design decisions in our method. Unless stated otherwise, we assume that SimPLe uses rollouts of length $50$ generated with the stochastic discrete model and is trained with $\gamma=0.95$ (see Section \ref{sec:training} and Section \ref{sec:policy_training}). 
-%TODO(pm): Review last sentence
 
 \subsection{Sample Efficiency}
 The primary evaluation in our experiments studies the sample efficiency of SimPLe, in comparison with state-of-the-art model-free deep RL methods in the literature. To that end, we compare with  Rainbow~\cite{rainbow,DBLP:journals/corr/abs-1812-06110}, which represents the state-of-the-art Q-learning method for Atari games, and PPO~\cite{ppo}, a model-free policy gradient algorithm. The results of the comparison are presented in Figures \ref{fig:compare_dopamine} and \ref{fig:compare_ppo}. For each game, we plot the number of time steps needed for either Rainbow or PPO to reach the same score that our method reaches after $100$K interaction steps. The red line indicates $100$K steps: any bar larger than this indicates a game where the model-free method required more steps. SimPLe outperforms the model-free algorithms in terms of learning speed on nearly all of the games, and in the case of a few games, does so by over an order of magnitude. For some games, it reaches the same performance that our PPO implementation reaches at $10$M steps. This indicates that model-based reinforcement learning provides an effective approach to learning Atari games, at a fraction of the sample complexity.
@@ -87,7 +86,7 @@ The results in these figures and Table \ref{tab:shortNumericalResults} are gener
 
 \subsection{Ablations}\label{sec:ablations}
 %TODO(pm):This section should be carefully reviewed
-%TODOO(pm):The order of paragraphs should be possibly changed
+%TODO(pm):The order of paragraphs should be possibly changed
 
 To evaluate the design of our method, we independently varied a number of the design decisions: the choice of the model, the $\gamma$ parameter, the length of PPO rollouts and the length of model training.
 
