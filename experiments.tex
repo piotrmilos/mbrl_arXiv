@@ -20,7 +20,6 @@ At every iteration, the latest policy trained under the learned model is used to
  For Rainbow, we used the implementation from the Dopamine package and spent considerable
  time tuning it for sample efficiency.
 
-%TODO(pm): review and include new results
 For visualization of all experiments see the supplementary website \footnote{\url{https://goo.gl/itykP8}},
 and for a summary see Figures \ref{fig:compare_dopamine} and  \ref{fig:compare_ppo}.
-It can be seen that our method is more sample-efficient than a highly tuned Rainbow baseline on almost all games, requires less than half of the samples on more than half of the games and, on \freeway\, is more than 10x more sample-efficient. Our method outperforms PPO by an even larger margin.
+It can be seen that our method is more sample-efficient than a highly tuned Rainbow baseline on almost all games, requires less than half of the samples in all but $6$  of the games and, on \freeway\, is more than $10$x more sample-efficient. Our method outperforms PPO by an even larger margin.
