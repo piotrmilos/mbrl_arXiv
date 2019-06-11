@@ -51,7 +51,7 @@ The primary evaluation in our experiments studies the sample efficiency of SimPL
 \centering
 \includegraphics[width=1.0\columnwidth]{figures/v1_eval_longmodel_vs_rainbow-1.png}
 \vspace{-0.2cm}
-\caption{Comparison with Rainbow. Each bar illustrates the number of interactions with environment required by Rainbow to achieve the same score as our method (SimPLe). The red line indicates the $100$K interactions threshold which is used by the our method.} 
+\caption{Comparison with Rainbow. Each bar illustrates the number of interactions with environment required by Rainbow to achieve the same score as our method (SimPLe). The red line indicates the $100$K interactions threshold used by our method.} 
 \label{fig:compare_dopamine}
 \end{figure}
 
@@ -60,24 +60,8 @@ The results in these figures and Table \ref{tab:shortNumericalResults} are gener
 \begin{figure}[t]
 \centering
 \includegraphics[width=1.0\columnwidth]{figures/v1_eval_longmodel_vs_ppo-1.png}
-\caption{Comparison with PPO. Each bar illustrates the number of interactions with environment required by PPO to achieve the same score as our method (SimPLe). The red line indicates the $100$K interactions threshold which is used by the our method.}
+\caption{Comparison with PPO. Each bar illustrates the number of interactions with environment required by PPO to achieve the same score as our method (SimPLe). The red line indicates the $100$K interactions threshold which is used by our method.}
 \label{fig:compare_ppo}
-\end{figure}
-
-%TODO(ALL): The section below is a merge of two texts. Check carefully. The results refered here were obtained for "short model traning", but our best results are for long. We may want to comment on that though it might be too confusing for the reader.
-\subsection{Results at different numbers of interactions}  As already described SimPLe excels in low data regime. We  focused our work on learning games with $100$K interaction steps with the environment, but we also studied settings with $20$K, $50$K, $200$K, $500$K and $1$M interactions. Our results are poor with $20$K interactions, but already almost as good with $50$K as with $100$K interactions. We observe that the results increase approximately up to $500$K samples, it is also the point at which they are on par with state-of-the-art model-free results tuned for the same number of steps, see Figure~\ref{fig:numberOfStepsSimple}. Such behavior, with fast growth at the beginning of training but lower asymptotic performance is commonly observed when comparing model-based and model-free methods. In experiments depicted in Figure~\ref{fig:numberOfStepsSimplePPO} we started PPO training using policies obtained by SimPLe at $100$K samples. We conclude that indeed SimPLe checkpoints may serve as useful initialization. Lower asymptotic performance is probably due to lower exploration as a policy pre-trained with SimPLe was meant to obtain the best performance on $100$K, at which point its entropy is very low thus hindering in the further PPO training.
-
-\newcommand{\mywidth}{3.5in}
-\setlength{\tabcolsep}{-2em}
-\begin{figure}
-	\includegraphics[width = \mywidth ]{figures/number_of_step_simple.pdf}
-	\caption{Behaviour with respect to the number of used samples. We report number of frames required by PPO to reach the score of our models. Results are averaged over games.\label{fig:numberOfStepsSimple}}
-\end{figure}
-
-
-\begin{figure}
-	\includegraphics[width = \mywidth]{figures/number_of_step_simple_ppo.pdf}
-	\caption{Behaviour with respect to the number of used samples. We report number of frames required by PPO to reach the score of model based + model free traning. Results are averaged over games.\label{fig:numberOfStepsSimplePPO}}
 \end{figure}
 
 
@@ -148,6 +132,22 @@ On Figure \ref{fig:adj_loops} we show results for experiments in which the numbe
 \label{fig:adj_gamma}
 \end{figure}
 
+
+%TODO(ALL): The section below is a merge of two texts. Check carefully. The results refered here were obtained for "short model traning", but our best results are for long. We may want to comment on that though it might be too confusing for the reader.
+\subsection{Results at different numbers of interactions}  SimPLe excels in low data regime and we  focused our work on learning games with $100$K interaction steps with the environment. Later, we also studied settings with $20$K, $50$K, $200$K, $500$K and $1$M interactions. Our results are poor with $20$K interactions, but already almost as good with $50$K as with $100$K interactions. We observe that the results increase approximately up to $500$K samples, it is also the point at which they are on par with state-of-the-art model-free results tuned for the same number of steps, see Figure~\ref{fig:numberOfStepsSimple}. Such behavior, with fast growth at the beginning of training but lower asymptotic performance is commonly observed when comparing model-based and model-free methods. In experiments depicted in Figure~\ref{fig:numberOfStepsSimplePPO} we started PPO training using policies obtained by SimPLe at $100$K samples. We conclude that indeed SimPLe checkpoints may serve as useful initialization. Lower asymptotic performance is probably due to lower exploration as a policy pre-trained with SimPLe was meant to obtain the best performance on $100$K, at which point its entropy is very low thus hindering in the further PPO training.
+
+\newcommand{\mywidth}{3.5in}
+\setlength{\tabcolsep}{-2em}
+\begin{figure}
+	\includegraphics[width = \mywidth ]{figures/number_of_step_simple.pdf}
+	\caption{Behaviour with respect to the number of used samples. We report number of frames required by PPO to reach the score of our models. Results are averaged over games.\label{fig:numberOfStepsSimple}}
+\end{figure}
+
+
+\begin{figure}
+	\includegraphics[width = \mywidth]{figures/number_of_step_simple_ppo.pdf}
+	\caption{Behaviour with respect to the number of used samples. We report number of frames required by PPO to reach the score of model based + model free traning. Results are averaged over games.\label{fig:numberOfStepsSimplePPO}}
+\end{figure}
 
 \subsection{Qualitative Analysis}\label{qualitative_analysis}
 This section provides a qualitative analysis and case studies of individual games. We emphasize that we did not adjust the method nor hyperparameters individually for each game, but we provide specific qualitative analysis to better understand the predictions from the model.\footnote{We strongly encourage the reader to watch accompanying videos \url{https://goo.gl/itykP8}} 
